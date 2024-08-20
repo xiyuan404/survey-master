@@ -27,12 +27,32 @@ const componentsSlice = createSlice({
     resetComponents: (state: ComponentsStateType, action: PayloadAction<ComponentsStateType>) => {
       return action.payload
     },
+
+    // 选中组件
     changeSelectedId: produce((draft: ComponentsStateType, action: PayloadAction<string>) => {
       draft.selectedId = action.payload
     }),
+
+    // 添加组件
+    addComponent: produce(
+      (draft: ComponentsStateType, action: PayloadAction<ComponentInfoType>) => {
+        const newComponent = action.payload
+
+        const { selectedId } = draft
+        if (selectedId !== '') {
+          // 画布中选中了组件
+          const addIdx = draft.componentList.findIndex(c => c.fe_id === selectedId)
+          draft.componentList.splice(addIdx + 1, 0, newComponent)
+        } else {
+          // 没有选择组件
+          draft.componentList.push(newComponent)
+        }
+        draft.selectedId = newComponent.fe_id
+      }
+    ),
   },
 })
 
-export const { resetComponents, changeSelectedId } = componentsSlice.actions
+export const { resetComponents, changeSelectedId, addComponent } = componentsSlice.actions
 
 export default componentsSlice.reducer

@@ -24,7 +24,7 @@ function getComponent(componentInfo: ComponentInfoType) {
 
 const EditCanvas: FC<PropsType> = ({ loading }) => {
   const { componentList, selectedId } = useGetComponentInfo()
-  console.log('componentList', componentList)
+  // console.log('componentList', componentList)
 
   const dispatch = useDispatch()
   const handleClick = (e: MouseEvent, id: string) => {

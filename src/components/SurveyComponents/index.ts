@@ -6,6 +6,7 @@ export type ComponentPropsType = SurveyInputPropsType & SurveyTitlePropsType
 
 export type ComponentConfType = {
   type: string
+  title: string
   Component: FC<ComponentPropsType>
   defaultProps: ComponentPropsType
 }
