@@ -15,6 +15,11 @@
   }
 }
 
+
+.selected {
+  border-color: #1890ff !important;
+}
+
 .component {
   pointer-events: none; // not react to  pointer events
 }

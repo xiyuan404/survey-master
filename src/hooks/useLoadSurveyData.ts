@@ -2,9 +2,8 @@ import { useRequest } from 'ahooks'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { surveysAPI } from 'src/service/survery'
+import { surveysAPI } from 'src/service/survey'
 import { resetComponents } from 'src/store/componentsReducer'
-import { resetPageInfo } from 'src/store/pageInfoReducer'
 
 function useLoadSurveyData() {
   const { id = '' } = useParams()
@@ -23,12 +22,9 @@ function useLoadSurveyData() {
 
   useEffect(() => {
     if (!data) return
-    const { title = '', componentList = [] } = data.data
+    const { componentList = [] } = data.data
     // 把componentList存储到 Redux store 中
-    dispatch(resetComponents({ componentList }))
-
-    // 把pageInfo存储到 redux store中
-    dispatch(resetPageInfo(title))
+    dispatch(resetComponents({ componentList, selectedId: '' }))
   }, [data])
 
   useEffect(() => {
