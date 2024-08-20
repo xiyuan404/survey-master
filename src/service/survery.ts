@@ -10,11 +10,15 @@ type SearchOptions = {
 
 // Pick<SearchOptions, keyof SearchOptions>
 
-const surveysURL = '/api/surveys/'
+const surveysURL = '/surveys/'
 
-export const surveyService = {
+export const surveysAPI = {
   update: async (id: string, opt: Partial<SearchOptions>): Promise<ResDataType> => {
     const data = (await instance.patch(surveysURL + id, opt)) as ResDataType
     return data as ResDataType
+  },
+  show: async (id: string): Promise<ResDataType> => {
+    const data = (await instance.get(surveysURL + id)) as ResDataType
+    return data
   },
 }
