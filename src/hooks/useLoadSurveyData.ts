@@ -23,8 +23,12 @@ function useLoadSurveyData() {
   useEffect(() => {
     if (!data) return
     const { componentList = [] } = data.data
+    let selectedId = ''
+    if (componentList.length > 0) {
+      selectedId = componentList[0].fe_id
+    }
     // 把componentList存储到 Redux store 中
-    dispatch(resetComponents({ componentList, selectedId: '' }))
+    dispatch(resetComponents({ componentList, selectedId }))
   }, [data])
 
   useEffect(() => {
