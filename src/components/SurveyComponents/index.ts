@@ -1,8 +1,11 @@
 import { FC } from 'react'
 import SurveyTitleConf, { SurveyTitlePropsType } from './SurveyTitle'
 import SurveyInputConf, { SurveyInputPropsType } from './SurveyInput'
+import SurveyParagraphConf, { SurveyParagraphPropsType } from './SurveyParagraph'
 
-export type ComponentPropsType = SurveyInputPropsType & SurveyTitlePropsType
+export type ComponentPropsType = SurveyInputPropsType &
+  SurveyTitlePropsType &
+  SurveyParagraphPropsType
 
 export type ComponentConfType = {
   type: string
@@ -12,7 +15,11 @@ export type ComponentConfType = {
   defaultProps: ComponentPropsType
 }
 
-const ComponentConfList: ComponentConfType[] = [SurveyTitleConf, SurveyInputConf]
+const ComponentConfList: ComponentConfType[] = [
+  SurveyTitleConf,
+  SurveyInputConf,
+  SurveyParagraphConf,
+]
 
 export function getComponentConfByType(type: string) {
   return ComponentConfList.find(c => c.type === type)
@@ -22,7 +29,7 @@ export const componentConfGroup = [
   {
     groupId: 'text-group',
     groupName: '文本显示',
-    components: [SurveyTitleConf],
+    components: [SurveyTitleConf, SurveyParagraphConf],
   },
   {
     groupId: 'input-group',
