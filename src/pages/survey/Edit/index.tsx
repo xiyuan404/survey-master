@@ -5,6 +5,8 @@ import useLoadSurveyData from 'src/hooks/useLoadSurveyData'
 import { useDispatch } from 'react-redux'
 import { changeSelectedId } from 'src/store/componentsReducer'
 import LeftPanel from './LeftPanel'
+import RightPanel from './rightPanel'
+import EditHeader from './EditHeader'
 
 const Edit: FC = () => {
   const { loading, error } = useLoadSurveyData()
@@ -15,7 +17,7 @@ const Edit: FC = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>header</div>
+      <EditHeader />
       <div className={styles['content-wrapper']}>
         <div className={styles.content}>
           <div className={styles.left}>
@@ -26,7 +28,9 @@ const Edit: FC = () => {
               <EditCanvas loading={loading} />
             </div>
           </div>
-          <div className={styles.right}>right</div>
+          <div className={styles.right}>
+            <RightPanel />
+          </div>
         </div>
       </div>
     </div>

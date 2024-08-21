@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react'
 import { SurveyInputPropsType } from './interface'
-import { Checkbox, Form, Input, Select } from 'antd'
+import { Form, Input } from 'antd'
 
 const PropsComponent: FC<SurveyInputPropsType> = (props: SurveyInputPropsType) => {
-  const { title, placeholder } = props
+  const { title, placeholder, onChange } = props
 
   const [form] = Form.useForm()
   useEffect(() => {
@@ -13,8 +13,14 @@ const PropsComponent: FC<SurveyInputPropsType> = (props: SurveyInputPropsType) =
     })
   }, [title, placeholder])
 
+  const handleValuesChange = () => {
+    if (onChange) {
+      onChange(form.getFieldsValue())
+    }
+  }
+
   return (
-    <Form form={form}>
+    <Form form={form} onValuesChange={handleValuesChange}>
       <Form.Item label="标题" name="title">
         <Input placeholder="Outlined" />
       </Form.Item>
