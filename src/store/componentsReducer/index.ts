@@ -130,6 +130,36 @@ const componentsSlice = createSlice({
         upsertComponent(draft, copiedComponentInfo)
       }
     }),
+
+    // 选中上一个组件
+    selectPrevComponent: produce((draft: ComponentsStateType) => {
+      const { selectedId, componentList } = draft
+      if (selectedId === '') return
+
+      const visibleComponentList = componentList.filter(c => !c.isHidden)
+
+      const currIdx = visibleComponentList.findIndex(c => c.fe_id === selectedId)
+
+      if (currIdx < 0) return
+
+      const len = visibleComponentList.length
+
+      const nextIdx = currIdx - 1 < 0 ? currIdx - 1 + len : currIdx - 1
+
+      draft.selectedId = visibleComponentList[nextIdx].fe_id
+    }),
+    selectNextComponent: produce((draft: ComponentsStateType) => {
+      const { selectedId, componentList } = draft
+
+      if (selectedId === '') return
+      const visibleComponentList = componentList.filter(c => !c.isHidden)
+
+      const currIdx = visibleComponentList.findIndex(c => c.fe_id === selectedId)
+      if (currIdx < 0) return
+
+      const nextIdx = (currIdx + 1) % visibleComponentList.length
+      draft.selectedId = visibleComponentList[nextIdx].fe_id
+    }),
   },
 })
 
@@ -143,6 +173,8 @@ export const {
   toggleSelectedComponentLocked,
   copySelectedComponent,
   pasteSelectedComponent,
+  selectPrevComponent,
+  selectNextComponent,
 } = componentsSlice.actions
 
 export default componentsSlice.reducer
