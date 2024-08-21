@@ -3,7 +3,7 @@ import { SurveyInputPropsType } from './interface'
 import { Form, Input } from 'antd'
 
 const PropsComponent: FC<SurveyInputPropsType> = (props: SurveyInputPropsType) => {
-  const { title, placeholder, onChange } = props
+  const { title, placeholder, onChange, isLocked } = props
 
   const [form] = Form.useForm()
   useEffect(() => {
@@ -20,7 +20,7 @@ const PropsComponent: FC<SurveyInputPropsType> = (props: SurveyInputPropsType) =
   }
 
   return (
-    <Form form={form} onValuesChange={handleValuesChange}>
+    <Form form={form} onValuesChange={handleValuesChange} disabled={isLocked}>
       <Form.Item label="标题" name="title">
         <Input placeholder="Outlined" />
       </Form.Item>

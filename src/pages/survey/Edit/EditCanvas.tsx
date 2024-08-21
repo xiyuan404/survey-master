@@ -23,8 +23,7 @@ function getComponent(componentInfo: ComponentInfoType) {
 }
 
 const EditCanvas: FC<PropsType> = ({ loading }) => {
-  const { componentList, selectedId } = useGetComponentInfo()
-  // console.log('componentList', componentList)
+  const { componentList, selectedId, selectedComponentInfo } = useGetComponentInfo()
 
   const dispatch = useDispatch()
   const handleClick = (e: MouseEvent, id: string) => {
@@ -38,20 +37,24 @@ const EditCanvas: FC<PropsType> = ({ loading }) => {
     </div>
   ) : (
     <div className={styles.canvas}>
-      {componentList.map(c => {
-        const { fe_id } = c
-        const wrapperDefaultClassName = styles['component-wrapper']
-        const selectedClassName = styles.selected
-        const wrapperClassName = classNames({
-          [wrapperDefaultClassName]: true,
-          [selectedClassName]: fe_id === selectedId,
-        })
-        return (
-          <div key={fe_id} className={wrapperClassName} onClick={e => handleClick(e, fe_id)}>
-            <div className={styles.component}>{getComponent(c)}</div>
-          </div>
-        )
-      })}
+      {componentList
+        .filter(c => !c.isHidden)
+        .map(c => {
+          const { fe_id, isLocked } = c
+          const wrapperDefaultClassName = styles['component-wrapper']
+          const selectedClassName = styles.selected
+          const lockedClassName = styles.locked
+          const wrapperClassName = classNames({
+            [wrapperDefaultClassName]: true,
+            [selectedClassName]: fe_id === selectedId,
+            [lockedClassName]: isLocked,
+          })
+          return (
+            <div key={fe_id} className={wrapperClassName} onClick={e => handleClick(e, fe_id)}>
+              <div className={styles.component}>{getComponent(c)}</div>
+            </div>
+          )
+        })}
     </div>
   )
 }

@@ -7,6 +7,8 @@ export type ComponentInfoType = {
   fe_id: string
   type: string
   title: string
+  isHidden?: boolean
+  isLocked?: boolean
   props: ComponentPropsType
 }
 
@@ -80,6 +82,38 @@ const componentsSlice = createSlice({
       draft.selectedId = nextSelectedId
       componentList.splice(selectedIndex, 1)
     }),
+
+    // 隐藏/选中组件
+    changeSelectedComponentToHidden: produce(
+      (
+        draft: ComponentsStateType,
+        action: PayloadAction<{ currSelectedId: string; isHidden: boolean }>
+      ) => {
+        const { componentList, selectedId } = draft
+        const { isHidden, currSelectedId } = action.payload
+        if (!selectedId) return
+
+        const nextSelectedId = getNextSelectedId(selectedId, componentList)
+        draft.selectedId = nextSelectedId
+
+        const currComponent = componentList.find(c => c.fe_id === currSelectedId)
+        if (currComponent) {
+          currComponent.isHidden = isHidden
+        }
+      }
+    ),
+
+    // 改变组件锁定状态
+    toggleSelectedComponentLocked: produce((draft: ComponentsStateType) => {
+      // debugger
+      const { selectedId, componentList } = draft
+      if (!selectedId) return
+      const selectedComponentInfo = componentList.find(c => c.fe_id === selectedId)
+
+      if (selectedComponentInfo) {
+        selectedComponentInfo.isLocked = !selectedComponentInfo.isLocked
+      }
+    }),
   },
 })
 
@@ -89,6 +123,8 @@ export const {
   addComponent,
   changeComponentProps,
   removeSelectedComponent,
+  changeSelectedComponentToHidden,
+  toggleSelectedComponentLocked,
 } = componentsSlice.actions
 
 export default componentsSlice.reducer

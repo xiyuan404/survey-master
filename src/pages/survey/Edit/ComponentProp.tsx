@@ -9,12 +9,13 @@ const NoProp: FC = () => {
 }
 
 const ComponentProp: FC = () => {
-  const { componentList, selectedId } = useGetComponentInfo()
+  const { componentList, selectedId, selectedComponentInfo } = useGetComponentInfo()
+
+  const { isLocked = false } = selectedComponentInfo || {}
   const dispatch = useDispatch()
 
   if (!selectedId) return <NoProp />
 
-  const selectedComponentInfo = componentList.find(c => c.fe_id === selectedId)
   if (!selectedComponentInfo) return <NoProp />
   const { type, props } = selectedComponentInfo
 
@@ -29,7 +30,7 @@ const ComponentProp: FC = () => {
     dispatch(changeComponentProps({ fe_id, newProps }))
   }
 
-  return <PropsComponent {...props} onChange={handleChange} />
+  return <PropsComponent {...props} onChange={handleChange} isLocked={isLocked} />
 }
 
 export default ComponentProp

@@ -1,16 +1,19 @@
 import { ComponentInfoType } from '.'
 
-export const getNextSelectedId = (removeId: string, componentList: ComponentInfoType[]) => {
-  if (!removeId) return ''
-  const len = componentList.length
+export const getNextSelectedId = (currSelectedId: string, componentList: ComponentInfoType[]) => {
+  if (!currSelectedId) return ''
+  const visibleComponentList = componentList.filter(c => !c.isHidden)
+  const len = visibleComponentList.length
   if (len <= 1) return ''
-  const removeIndex = componentList.findIndex(c => c.fe_id === removeId)
+
+  const removeIndex = visibleComponentList.findIndex(c => c.fe_id === currSelectedId)
   let nextSelectedId = ''
 
   if (removeIndex + 1 !== len) {
-    nextSelectedId = componentList[removeIndex + 1].fe_id
+    nextSelectedId = visibleComponentList[removeIndex + 1].fe_id
   } else {
-    nextSelectedId = componentList[removeIndex - 1].fe_id
+    nextSelectedId = visibleComponentList[removeIndex - 1].fe_id
   }
+
   return nextSelectedId
 }
