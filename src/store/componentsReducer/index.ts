@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ComponentPropsType } from 'src/components/SurveyComponents'
 import { produce } from 'immer'
-import { getNextSelectedId } from './utils'
+import { getNextSelectedId, upsertComponent } from './utils'
+import cloneDeep from 'lodash.clonedeep'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -15,11 +16,13 @@ export type ComponentInfoType = {
 export type ComponentsStateType = {
   selectedId: string
   componentList: Array<ComponentInfoType>
+  copiedComponentInfo: ComponentInfoType | null
 }
 
 const INIT_STATE: ComponentsStateType = {
   componentList: [],
   selectedId: '',
+  copiedComponentInfo: null,
 }
 
 const componentsSlice = createSlice({
@@ -39,18 +42,9 @@ const componentsSlice = createSlice({
     // 添加组件
     addComponent: produce(
       (draft: ComponentsStateType, action: PayloadAction<ComponentInfoType>) => {
-        const newComponent = action.payload
+        const newComponentInfo = action.payload
 
-        const { selectedId } = draft
-        if (selectedId !== '') {
-          // 画布中选中了组件
-          const addIdx = draft.componentList.findIndex(c => c.fe_id === selectedId)
-          draft.componentList.splice(addIdx + 1, 0, newComponent)
-        } else {
-          // 没有选择组件
-          draft.componentList.push(newComponent)
-        }
-        draft.selectedId = newComponent.fe_id
+        upsertComponent(draft, newComponentInfo)
       }
     ),
 
@@ -114,6 +108,25 @@ const componentsSlice = createSlice({
         selectedComponentInfo.isLocked = !selectedComponentInfo.isLocked
       }
     }),
+
+    // 复制当前选中的组件
+    copySelectedComponent: produce((draft: ComponentsStateType) => {
+      const { selectedId, componentList } = draft
+      if (!selectedId) return
+
+      const selectedComponentInfo = componentList.find(c => c.fe_id === selectedId)
+      if (selectedComponentInfo) {
+        draft.copiedComponentInfo = cloneDeep(selectedComponentInfo)
+      }
+    }),
+
+    // 黏贴到当前选中的组件后
+    pasteSelectedComponent: produce((draft: ComponentsStateType) => {
+      const { copiedComponentInfo } = draft
+      if (copiedComponentInfo) {
+        upsertComponent(draft, copiedComponentInfo)
+      }
+    }),
   },
 })
 
@@ -125,6 +138,8 @@ export const {
   removeSelectedComponent,
   changeSelectedComponentToHidden,
   toggleSelectedComponentLocked,
+  copySelectedComponent,
+  pasteSelectedComponent,
 } = componentsSlice.actions
 
 export default componentsSlice.reducer

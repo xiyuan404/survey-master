@@ -1,4 +1,4 @@
-import { ComponentInfoType } from '.'
+import { ComponentInfoType, ComponentsStateType } from '.'
 
 export const getNextSelectedId = (currSelectedId: string, componentList: ComponentInfoType[]) => {
   if (!currSelectedId) return ''
@@ -16,4 +16,18 @@ export const getNextSelectedId = (currSelectedId: string, componentList: Compone
   }
 
   return nextSelectedId
+}
+
+export function upsertComponent(draft: ComponentsStateType, newComponentInfo: ComponentInfoType) {
+  const { selectedId, componentList } = draft
+
+  if (selectedId !== '') {
+    // 画布中选中了组件
+    const addIdx = componentList.findIndex(c => c.fe_id === selectedId)
+    componentList.splice(addIdx + 1, 0, newComponentInfo)
+  } else {
+    // 没有选择组件
+    componentList.push(newComponentInfo)
+  }
+  return selectedId
 }

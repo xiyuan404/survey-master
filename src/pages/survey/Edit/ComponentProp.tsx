@@ -9,7 +9,7 @@ const NoProp: FC = () => {
 }
 
 const ComponentProp: FC = () => {
-  const { componentList, selectedId, selectedComponentInfo } = useGetComponentInfo()
+  const { selectedId, selectedComponentInfo } = useGetComponentInfo()
 
   const { isLocked = false } = selectedComponentInfo || {}
   const dispatch = useDispatch()
