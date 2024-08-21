@@ -8,6 +8,7 @@ import {
 import { Button, Space, Tooltip } from 'antd'
 import React, { FC } from 'react'
 import { useDispatch } from 'react-redux'
+import useBindCanvasKeypress from 'src/hooks/useBindCanvasKeypress'
 import useGetComponentInfo from 'src/hooks/useGetComponentInfo'
 import {
   changeSelectedComponentToHidden,
@@ -40,6 +41,8 @@ const EditToolbar: FC = () => {
   const paste = () => {
     dispatch(pasteSelectedComponent())
   }
+
+  useBindCanvasKeypress()
 
   return (
     <Space>

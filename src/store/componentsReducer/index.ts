@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ComponentPropsType } from 'src/components/SurveyComponents'
 import { produce } from 'immer'
+
 import { getNextSelectedId, upsertComponent } from './utils'
 import cloneDeep from 'lodash.clonedeep'
+import { nanoid } from 'nanoid'
 
 export type ComponentInfoType = {
   fe_id: string
@@ -124,6 +126,7 @@ const componentsSlice = createSlice({
     pasteSelectedComponent: produce((draft: ComponentsStateType) => {
       const { copiedComponentInfo } = draft
       if (copiedComponentInfo) {
+        copiedComponentInfo.fe_id = nanoid()
         upsertComponent(draft, copiedComponentInfo)
       }
     }),
