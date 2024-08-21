@@ -6,6 +6,6 @@ export type SurveyInputPropsType = {
 }
 
 export const SurveyInputDefaultProps: SurveyInputPropsType = {
-  title: 'title',
+  title: '输入框',
   placeholder: 'enter...',
 }

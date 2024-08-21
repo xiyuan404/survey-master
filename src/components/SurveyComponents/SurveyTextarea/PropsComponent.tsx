@@ -1,0 +1,34 @@
+import React, { FC, useEffect } from 'react'
+import { SurveyTextareaPropsType } from './interface'
+import { Form, Input } from 'antd'
+
+const PropsComponent: FC<SurveyTextareaPropsType> = (props: SurveyTextareaPropsType) => {
+  const { title, placeholder, onChange, disabled } = props
+
+  const [form] = Form.useForm()
+  useEffect(() => {
+    form.setFieldsValue({
+      title,
+      placeholder,
+    })
+  }, [title, placeholder])
+
+  const handleValuesChange = () => {
+    if (onChange) {
+      onChange(form.getFieldsValue())
+    }
+  }
+
+  return (
+    <Form form={form} onValuesChange={handleValuesChange} disabled={disabled}>
+      <Form.Item label="标题" name="title">
+        <Input placeholder="Outlined" />
+      </Form.Item>
+      <Form.Item label="Placeholder" name="placeholder">
+        <Input placeholder="Outlined" />
+      </Form.Item>
+    </Form>
+  )
+}
+
+export default PropsComponent

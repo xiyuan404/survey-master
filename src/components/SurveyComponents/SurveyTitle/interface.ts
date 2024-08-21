@@ -7,7 +7,7 @@ export type SurveyTitlePropsType = {
 }
 
 export const SurveyTitleDefaultProps: SurveyTitlePropsType = {
-  text: '文本',
+  text: '一行文本',
   level: 1,
   isCenter: false,
 }
