@@ -7,7 +7,12 @@ import { EyeInvisibleOutlined, LockOutlined } from '@ant-design/icons'
 
 import classNames from 'classnames'
 import { useDispatch } from 'react-redux'
-import { changeComponentTitle, changeSelectedId } from 'src/store/componentsReducer'
+import {
+  changeComponentTitle,
+  changeSelectedId,
+  toggleComponentHidden,
+  toggleComponentLocked,
+} from 'src/store/componentsReducer'
 
 const Layers: FC = () => {
   const { componentList, selectedId } = useGetComponentInfo()
@@ -38,6 +43,20 @@ const Layers: FC = () => {
     )
   }
 
+  // 切换 隐藏和显示
+  const changeHidden = fe_id => {
+    dispatch(toggleComponentHidden({ toggleId: fe_id }))
+  }
+
+  // 切换 锁定/解锁
+  const changeLocked = (fe_id: string) => {
+    dispatch(
+      toggleComponentLocked({
+        toggleId: fe_id,
+      })
+    )
+  }
+
   return (
     <>
       {componentList.map(componentInfo => {
@@ -62,10 +81,26 @@ const Layers: FC = () => {
               )}
               {changingTitleId !== fe_id && title}
             </div>
-            <Space>
-              <Button icon={<LockOutlined />} />
-              <Button icon={<EyeInvisibleOutlined />} />
-            </Space>
+            <div className={styles.handler}>
+              <Space>
+                <Button
+                  size="small"
+                  shape="circle"
+                  icon={<EyeInvisibleOutlined />}
+                  className={!isHidden ? styles.btn : ''}
+                  type={isHidden ? 'primary' : 'text'}
+                  onClick={() => changeHidden(fe_id)}
+                />
+                <Button
+                  size="small"
+                  shape="circle"
+                  icon={<LockOutlined />}
+                  className={!isLocked ? styles.btn : ''}
+                  type={isLocked ? 'primary' : 'text'}
+                  onClick={() => changeLocked(fe_id)}
+                />
+              </Space>
+            </div>
           </div>
         )
       })}

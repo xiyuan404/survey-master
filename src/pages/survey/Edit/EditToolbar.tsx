@@ -11,11 +11,11 @@ import { useDispatch } from 'react-redux'
 import useBindCanvasKeypress from 'src/hooks/useBindCanvasKeypress'
 import useGetComponentInfo from 'src/hooks/useGetComponentInfo'
 import {
-  changeSelectedComponentToHidden,
+  toggleComponentHidden,
   copySelectedComponent,
   pasteSelectedComponent,
   removeSelectedComponent,
-  toggleSelectedComponentLocked,
+  toggleComponentLocked,
 } from 'src/store/componentsReducer'
 const EditToolbar: FC = () => {
   const { selectedId, selectedComponentInfo, copiedComponentInfo } = useGetComponentInfo()
@@ -28,10 +28,14 @@ const EditToolbar: FC = () => {
   }
 
   const handleHidden = () => {
-    dispatch(changeSelectedComponentToHidden({ isHidden: true, currSelectedId: selectedId }))
+    dispatch(toggleComponentHidden({ toggleId: selectedId }))
   }
   const handleLock = () => {
-    dispatch(toggleSelectedComponentLocked())
+    dispatch(
+      toggleComponentLocked({
+        toggleId: selectedId,
+      })
+    )
   }
 
   const copy = () => {

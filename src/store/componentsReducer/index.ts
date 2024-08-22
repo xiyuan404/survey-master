@@ -80,36 +80,39 @@ const componentsSlice = createSlice({
     }),
 
     // 隐藏/选中组件
-    changeSelectedComponentToHidden: produce(
-      (
-        draft: ComponentsStateType,
-        action: PayloadAction<{ currSelectedId: string; isHidden: boolean }>
-      ) => {
+    toggleComponentHidden: produce(
+      (draft: ComponentsStateType, action: PayloadAction<{ toggleId: string }>) => {
         const { componentList, selectedId } = draft
-        const { isHidden, currSelectedId } = action.payload
-        if (!selectedId) return
+        const { toggleId } = action.payload
 
-        const nextSelectedId = getNextSelectedId(selectedId, componentList)
-        draft.selectedId = nextSelectedId
+        const toggleCmp = componentList.find(c => c.fe_id === toggleId)
+        if (!toggleCmp) return
+        const { isHidden } = toggleCmp
 
-        const currComponent = componentList.find(c => c.fe_id === currSelectedId)
-        if (currComponent) {
-          currComponent.isHidden = isHidden
+        let nextSelectedId = ''
+        if (!isHidden) {
+          nextSelectedId = getNextSelectedId(selectedId, componentList)
+        } else {
+          nextSelectedId = toggleId
         }
+        draft.selectedId = nextSelectedId
+        toggleCmp.isHidden = !isHidden
       }
     ),
 
     // 改变组件锁定状态
-    toggleSelectedComponentLocked: produce((draft: ComponentsStateType) => {
-      // debugger
-      const { selectedId, componentList } = draft
-      if (!selectedId) return
-      const selectedComponentInfo = componentList.find(c => c.fe_id === selectedId)
+    toggleComponentLocked: produce(
+      (draft: ComponentsStateType, action: PayloadAction<{ toggleId: string }>) => {
+        // debugger
+        const { componentList } = draft
+        const { toggleId } = action.payload
+        const selectedComponentInfo = componentList.find(c => c.fe_id === toggleId)
 
-      if (selectedComponentInfo) {
-        selectedComponentInfo.isLocked = !selectedComponentInfo.isLocked
+        if (selectedComponentInfo) {
+          selectedComponentInfo.isLocked = !selectedComponentInfo.isLocked
+        }
       }
-    }),
+    ),
 
     // 复制当前选中的组件
     copySelectedComponent: produce((draft: ComponentsStateType) => {
@@ -186,8 +189,8 @@ export const {
   addComponent,
   changeComponentProps,
   removeSelectedComponent,
-  changeSelectedComponentToHidden,
-  toggleSelectedComponentLocked,
+  toggleComponentHidden,
+  toggleComponentLocked,
   copySelectedComponent,
   pasteSelectedComponent,
   selectPrevComponent,
