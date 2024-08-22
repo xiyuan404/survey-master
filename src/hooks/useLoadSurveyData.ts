@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { surveysAPI } from 'src/service/survey'
 import { resetComponents } from 'src/store/componentsReducer'
+import { resetPageInfo } from 'src/store/pageInfoReducer'
 
 function useLoadSurveyData() {
   const { id = '' } = useParams()
@@ -22,13 +23,17 @@ function useLoadSurveyData() {
 
   useEffect(() => {
     if (!data) return
-    const { componentList = [] } = data.data
+    const { componentList = [], css = '', js = '', title = '', desc = '' } = data.data
+
     let selectedId = ''
     if (componentList.length > 0) {
       selectedId = componentList[0].fe_id
     }
     // 把componentList存储到 Redux store 中
     dispatch(resetComponents({ componentList, selectedId, copiedComponentInfo: null }))
+
+    // 把pageInfo存储到Redux store中
+    dispatch(resetPageInfo({ css, js, title, desc }))
   }, [data])
 
   useEffect(() => {
