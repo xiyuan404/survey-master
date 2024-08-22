@@ -5,7 +5,7 @@ import useLoadSurveyData from 'src/hooks/useLoadSurveyData'
 import { useDispatch } from 'react-redux'
 import { changeSelectedId } from 'src/store/componentsReducer'
 import LeftPanel from './LeftPanel'
-import RightPanel from './rightPanel'
+import RightPanel from './RightPanel'
 import EditHeader from './EditHeader'
 
 const Edit: FC = () => {
