@@ -8,6 +8,8 @@ import {
   selectPrevComponent,
 } from 'src/store/componentsReducer'
 
+import { ActionCreators as UndoActionCreators } from 'redux-undo'
+
 /**
  *
  * @returns 没有选中form control
@@ -54,8 +56,20 @@ const useBindCanvasKeypress = () => {
     if (!isActiveElementValid()) return
     dispatch(selectNextComponent())
   })
-
-  // TODO 撤销重做
+  useKeyPress(
+    ['ctrl.z', 'meta.z'],
+    () => {
+      if (!isActiveElementValid()) return
+      dispatch(UndoActionCreators.undo())
+    },
+    {
+      exactMatch: true,
+    }
+  )
+  useKeyPress(['ctrl.shift.z', 'meta.shift.z'], () => {
+    if (!isActiveElementValid()) return
+    dispatch(UndoActionCreators.redo())
+  })
 }
 
 export default useBindCanvasKeypress
