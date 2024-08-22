@@ -5,13 +5,15 @@ import SurveyParagraphConf, { SurveyParagraphPropsType } from './SurveyParagraph
 import SurveyInfoConf, { SurveyInfoPropsType } from './SurveyInfo'
 import SurveyTextareaConf, { SurveyTextareaPropsType } from './SurveyTextarea'
 import SurveyRadioConf, { SurveyRadioPropsType } from './SurveyRadio'
+import SurveyCheckboxConf, { SurveyCheckboxPropsType } from './SurveyCheckbox'
 
 export type ComponentPropsType = SurveyInputPropsType &
   SurveyTitlePropsType &
   SurveyParagraphPropsType &
   SurveyInfoPropsType &
   SurveyTextareaPropsType &
-  SurveyRadioPropsType
+  SurveyRadioPropsType &
+  SurveyCheckboxPropsType
 
 export type ComponentConfType = {
   type: string
@@ -28,6 +30,7 @@ const ComponentConfList: ComponentConfType[] = [
   SurveyInfoConf,
   SurveyTextareaConf,
   SurveyRadioConf,
+  SurveyCheckboxConf,
 ]
 
 export function getComponentConfByType(type: string) {
@@ -48,6 +51,6 @@ export const componentConfGroup = [
   {
     groupId: 'choose-group',
     groupName: '用户选择',
-    components: [SurveyRadioConf],
+    components: [SurveyRadioConf, SurveyCheckboxConf],
   },
 ]

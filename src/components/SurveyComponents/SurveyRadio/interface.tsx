@@ -1,4 +1,4 @@
-export type OptsType = {
+export type listType = {
   value: string
   label: string
 }
@@ -6,7 +6,7 @@ export type OptsType = {
 export type SurveyRadioPropsType = {
   title?: string
   isVertical?: boolean
-  opts?: OptsType[]
+  list?: listType[]
   selected?: string
 
   onChange?: (newProps: SurveyRadioPropsType) => void
@@ -16,7 +16,7 @@ export type SurveyRadioPropsType = {
 export const SurveyRadioDefaultProps = {
   title: '单选标题',
   isVertical: false,
-  opts: [
+  list: [
     { label: 'item1', value: 'item1' },
     { label: 'item2', value: 'item2' },
     { label: 'item3', value: 'item3' },
