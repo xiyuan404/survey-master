@@ -13,11 +13,13 @@ type SearchOptions = {
 const surveysURL = '/surveys/'
 
 export const surveysAPI = {
-  update: async (id: string, opt: Partial<SearchOptions>): Promise<ResDataType> => {
+  // 更新单个问卷
+  update: async (id: string, opt: { [key: string]: any }): Promise<ResDataType> => {
     const data = (await instance.patch(surveysURL + id, opt)) as ResDataType
     return data as ResDataType
   },
-  show: async (id: string): Promise<ResDataType> => {
+  // 查询单个问卷信息
+  get: async (id: string): Promise<ResDataType> => {
     const data = (await instance.get(surveysURL + id)) as ResDataType
     return data
   },

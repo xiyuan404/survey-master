@@ -13,7 +13,7 @@ function useLoadSurveyData() {
   const { data, loading, error, run } = useRequest(
     async (id: string) => {
       if (!id) throw new Error('当前问卷id不存在')
-      const data = await surveysAPI.show(id)
+      const data = await surveysAPI.get(id)
       return data
     },
     {

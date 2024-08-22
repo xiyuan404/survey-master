@@ -1,17 +1,21 @@
 import { Button, Input, Space, Typography } from 'antd'
 
-import React, { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
 
 import styles from './EditHeader.module.scss'
-import { EditOutlined, LeftOutlined } from '@ant-design/icons'
-import { useNavigate } from 'react-router-dom'
+import { EditOutlined, LeftOutlined, LoadingOutlined } from '@ant-design/icons'
+import { useNavigate, useParams } from 'react-router-dom'
 import EditToolbar from './EditToolbar'
 import useGetPageInfo from 'src/hooks/useGetPageInfo'
 import { useDispatch } from 'react-redux'
 import { changePageTitle } from 'src/store/pageInfoReducer'
+import useGetComponentInfo from 'src/hooks/useGetComponentInfo'
+import { useKeyPress, useRequest } from 'ahooks'
+import { surveysAPI } from 'src/service/survey'
 
 const { Title } = Typography
 
+// 显示和修改标题
 const RenderTitle: FC = () => {
   const { title } = useGetPageInfo()
   const [editState, setEditState] = useState(false)
@@ -42,6 +46,33 @@ const RenderTitle: FC = () => {
   )
 }
 
+// 手动保存编辑页,判断loading防止连续触发
+
+const SaveButton = () => {
+  const { componentList } = useGetComponentInfo()
+  const pageInfo = useGetPageInfo()
+  const { id } = useParams()
+  const { loading, run: save } = useRequest(
+    async () => {
+      if (!id) return
+      await surveysAPI.update(id, { ...pageInfo, componentList })
+    },
+    { manual: true }
+  )
+
+  useKeyPress(['ctrl.s', 'meta.s'], e => {
+    e.preventDefault()
+    if (!loading) save()
+  })
+
+  return (
+    <Button disabled={loading} onClick={save} icon={loading ? <LoadingOutlined /> : null}>
+      保存
+    </Button>
+  )
+}
+
+// 编辑页头部
 const EditHeader: FC = () => {
   const nav = useNavigate()
 
@@ -60,7 +91,7 @@ const EditHeader: FC = () => {
       </div>
       <div className={styles.right}>
         <Space>
-          <Button>保存</Button>
+          <SaveButton />
           <Button type="primary">发布</Button>
         </Space>
       </div>
