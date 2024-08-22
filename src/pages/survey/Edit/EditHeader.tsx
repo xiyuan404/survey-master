@@ -1,4 +1,4 @@
-import { Button, Input, Space, Typography } from 'antd'
+import { Button, Input, message, Space, Typography } from 'antd'
 
 import React, { ChangeEvent, FC, KeyboardEvent, useState } from 'react'
 
@@ -10,7 +10,7 @@ import useGetPageInfo from 'src/hooks/useGetPageInfo'
 import { useDispatch } from 'react-redux'
 import { changePageTitle } from 'src/store/pageInfoReducer'
 import useGetComponentInfo from 'src/hooks/useGetComponentInfo'
-import { useKeyPress, useRequest } from 'ahooks'
+import { useDebounceEffect, useKeyPress, useRequest } from 'ahooks'
 import { surveysAPI } from 'src/service/survey'
 
 const { Title } = Typography
@@ -57,7 +57,58 @@ const SaveButton = () => {
       if (!id) return
       await surveysAPI.update(id, { ...pageInfo, componentList })
     },
-    { manual: true }
+    {
+      manual: true,
+    }
+  )
+
+  useKeyPress(['ctrl.s', 'meta.s'], e => {
+    e.preventDefault()
+    if (!loading) save()
+  })
+
+  // 监听问卷信息变化，自动保存
+  useDebounceEffect(
+    () => {
+      save()
+    },
+    [pageInfo, componentList],
+    {
+      wait: 1000,
+    }
+  )
+
+  return (
+    <Button disabled={loading} onClick={save} icon={loading ? <LoadingOutlined /> : null}>
+      保存
+    </Button>
+  )
+}
+
+// 发布
+
+const PublishButton = () => {
+  const nav = useNavigate()
+
+  const { componentList } = useGetComponentInfo()
+  const pageInfo = useGetPageInfo()
+  const { id } = useParams()
+  const { loading, run: save } = useRequest(
+    async () => {
+      if (!id) return
+      await surveysAPI.update(id, {
+        ...pageInfo,
+        componentList,
+        isPublish: true, // 修改发布标志
+      })
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('发布成功')
+        nav('survey/stat/id')
+      },
+    }
   )
 
   useKeyPress(['ctrl.s', 'meta.s'], e => {
@@ -67,7 +118,7 @@ const SaveButton = () => {
 
   return (
     <Button disabled={loading} onClick={save} icon={loading ? <LoadingOutlined /> : null}>
-      保存
+      发布
     </Button>
   )
 }
