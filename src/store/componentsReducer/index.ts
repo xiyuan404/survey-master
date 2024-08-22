@@ -160,6 +160,23 @@ const componentsSlice = createSlice({
       const nextIdx = (currIdx + 1) % visibleComponentList.length
       draft.selectedId = visibleComponentList[nextIdx].fe_id
     }),
+
+    // 改变组件标题
+
+    changeComponentTitle: produce(
+      (
+        draft: ComponentsStateType,
+        action: PayloadAction<{ changingTitleId: string; newTitle: string }>
+      ) => {
+        const { changingTitleId, newTitle } = action.payload
+
+        const { componentList } = draft
+        const cmpInfo = componentList.find(cmpInfo => cmpInfo.fe_id === changingTitleId)
+        if (cmpInfo) {
+          cmpInfo.title = newTitle
+        }
+      }
+    ),
   },
 })
 
@@ -175,6 +192,7 @@ export const {
   pasteSelectedComponent,
   selectPrevComponent,
   selectNextComponent,
+  changeComponentTitle,
 } = componentsSlice.actions
 
 export default componentsSlice.reducer
