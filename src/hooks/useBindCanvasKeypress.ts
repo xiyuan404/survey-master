@@ -15,9 +15,9 @@ import {
 
 const isActiveElementValid = () => {
   const activeElement = document.activeElement
-  if (activeElement === document.body) {
-    return true
-  }
+  if (activeElement === document.body) return true
+  if (document.activeElement?.matches("[role='button']")) return true
+
   return false
 }
 
