@@ -106,7 +106,7 @@ const PublishButton = () => {
       manual: true,
       onSuccess() {
         message.success('发布成功')
-        nav('survey/stat/id')
+        nav('survey/stat/' + id)
       },
     }
   )
@@ -117,7 +117,12 @@ const PublishButton = () => {
   })
 
   return (
-    <Button disabled={loading} onClick={save} icon={loading ? <LoadingOutlined /> : null}>
+    <Button
+      type="primary"
+      disabled={loading}
+      onClick={save}
+      icon={loading ? <LoadingOutlined /> : null}
+    >
       发布
     </Button>
   )
@@ -143,7 +148,7 @@ const EditHeader: FC = () => {
       <div className={styles.right}>
         <Space>
           <SaveButton />
-          <Button type="primary">发布</Button>
+          <PublishButton />
         </Space>
       </div>
     </div>
