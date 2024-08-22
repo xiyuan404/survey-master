@@ -4,9 +4,7 @@
 .component-wrapper {
 
    
-  &.selected  {
-    border-color: #1890ff ;
-  }
+  
 
   margin-bottom: 12px;
   border: 1px solid #fff;
@@ -41,5 +39,7 @@
 
 
 
-
+.selected  {
+  border-color: #1890ff  !important;
+}
 
