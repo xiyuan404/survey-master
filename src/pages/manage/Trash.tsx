@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 import styles from './common.module.scss'
 import SurveyCard from 'src/components/SurveyCard'
 import { Button, Empty, Space, Table, Tag, Typography, Modal } from 'antd'
+import ListSearch from 'src/components/ListSearch'
 
 const { Title } = Typography
 const { confirm } = Modal
@@ -102,6 +103,9 @@ const List: FC = () => {
     <>
       <div className={styles.header}>
         <Title level={3}>回收站</Title>
+        <div className={styles.right}>
+          <ListSearch />
+        </div>
       </div>
       {surveyList.length <= 0 && <Empty />}
       {surveyList.length > 0 && RenderTable}

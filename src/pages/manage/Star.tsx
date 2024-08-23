@@ -2,6 +2,7 @@ import React, { FC, useState } from 'react'
 import styles from './common.module.scss'
 import SurveyCard from 'src/components/SurveyCard'
 import { Empty, Typography } from 'antd'
+import ListSearch from 'src/components/ListSearch'
 
 const { Title } = Typography
 
@@ -39,6 +40,9 @@ const List: FC = () => {
     <>
       <div className={styles.header}>
         <Title level={3}>header</Title>
+        <div className={styles.right}>
+          <ListSearch />
+        </div>
       </div>
       <div className={styles.content}>
         {surveyList.length <= 0 && <Empty />}
