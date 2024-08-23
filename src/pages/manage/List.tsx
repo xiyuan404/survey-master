@@ -1,40 +1,29 @@
-import React, { FC, useState } from 'react'
+import React, { FC, useEffect, useState } from 'react'
 import styles from './common.module.scss'
-import SurveyCard from 'src/components/SurveyCard'
-import { Empty, Typography } from 'antd'
+import SurveyCard, { SurveyCardPropsType } from 'src/components/SurveyCard'
+import { Empty, Spin, Typography } from 'antd'
 import ListSearch from 'src/components/ListSearch'
+import { surveysAPI } from 'src/service/survey'
 
 const { Title } = Typography
 
-const rawSurveyList = [
-  {
-    _id: 'item1',
-    title: '问卷1',
-    isPublished: false,
-    isStar: false,
-    answerCount: 1,
-    createAt: '2024-8-14',
-  },
-  {
-    _id: 'item2',
-    title: '问卷1',
-    isPublished: true,
-    isStar: false,
-    answerCount: 1,
-    createAt: '2024-8-14',
-  },
-  {
-    _id: 'item3',
-    title: '问卷1',
-    isPublished: false,
-    isStar: true,
-    answerCount: 1,
-    createAt: '2024-8-14',
-  },
-]
-
 const List: FC = () => {
-  const [surveyList, setSurveyList] = useState(rawSurveyList)
+  // 不依赖useRequest版本获取问卷列表
+  const [list, setList] = useState<SurveyCardPropsType[]>([])
+  const [total, setTotal] = useState(0)
+  const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    async function load() {
+      setLoading(true)
+      const data = await surveysAPI.list()
+      const { list = [], total = 0 } = data
+      setList(list)
+      setTotal(total)
+      setLoading(false)
+    }
+    load()
+  }, [])
+
   return (
     <>
       <div className={styles.header}>
@@ -46,9 +35,13 @@ const List: FC = () => {
         </div>
       </div>
       <div className={styles.content}>
-        {surveyList.length <= 0 && <Empty />}
-        {surveyList.length > 0 &&
-          rawSurveyList.map(item => <SurveyCard key={item._id} {...item} />)}
+        {loading && (
+          <div style={{ textAlign: 'center' }}>
+            <Spin />
+          </div>
+        )}
+        {list.length <= 0 && <Empty />}
+        {list.length > 0 && list.map(item => <SurveyCard key={item._id} {...item} />)}
       </div>
       <div className={styles.footer}>加载更多</div>
     </>

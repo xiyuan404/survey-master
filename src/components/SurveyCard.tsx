@@ -15,7 +15,7 @@ import { SURVEY_EDIT_PATHNAME, SURVEY_STAT_PATHNAME } from 'src/router'
 
 const { confirm } = Modal
 
-type propsType = {
+export type SurveyCardPropsType = {
   _id: string // 服务端 mongodb 自动生成的不重复id
   isPublished: boolean
   isStar: boolean
@@ -24,7 +24,7 @@ type propsType = {
   createAt: string
 }
 
-const SurveyCard: FC<propsType> = (props: propsType) => {
+const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
   const { _id, isPublished, isStar, title, answerCount, createAt } = props
   const nav = useNavigate()
 

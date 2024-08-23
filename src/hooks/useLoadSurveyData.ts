@@ -1,3 +1,8 @@
+/**
+ * @description 抽离出可复用加载问卷详情信息逻辑
+ * 页面加载时默认获取，页面路径参数改变后会重新获取
+ */
+
 import { useRequest } from 'ahooks'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
