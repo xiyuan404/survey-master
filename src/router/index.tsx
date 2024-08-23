@@ -6,6 +6,7 @@ import MainLayout from 'src/layouts/MainLayout'
 import ManageLayout from 'src/layouts/ManageLayout'
 import Home from 'src/pages/Home'
 import NotFound from 'src/pages/NotFound'
+import List from 'src/pages/manage/List'
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
         children: [
           {
             path: 'list',
+            element: <List />,
           },
           {
             path: 'star',
@@ -67,6 +69,8 @@ export const HOME_PATHNAME = '/'
 export const LOGIN_PATHNAME = '/login'
 export const Register_PATHNAME = '/register'
 export const MANAGE_INDEX_PATHNAME = '/manage/list'
+export const SURVEY_EDIT_PATHNAME = '/survey/edit'
+export const SURVEY_STAT_PATHNAME = '/survey/state'
 
 export function isLoginOrRegisterPage(pathname: string) {
   return [LOGIN_PATHNAME, Register_PATHNAME].includes(pathname)

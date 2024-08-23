@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import styles from './ManageLayout.module.scss'
 import { Button, Divider, Space } from 'antd'
 import { BarsOutlined, DeleteOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 
 const ManageLayout: FC = () => {
   const { pathname } = useLocation()
@@ -42,7 +42,9 @@ const ManageLayout: FC = () => {
           </Button>
         </Space>
       </div>
-      <div className={styles.right}>you</div>
+      <div className={styles.right}>
+        <Outlet />
+      </div>
     </div>
   )
 }
