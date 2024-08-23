@@ -2,8 +2,40 @@ import React from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import Edit from '../pages/survey/Edit'
 import SurveyLayout from 'src/layouts/SurveyLayout'
+import MainLayout from 'src/layouts/MainLayout'
+import ManageLayout from 'src/layouts/ManageLayout'
 
 const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <MainLayout />,
+    children: [
+      {
+        path: '/',
+      },
+      {
+        path: 'login',
+      },
+      {
+        path: 'register',
+      },
+      {
+        path: 'manage',
+        element: <ManageLayout />,
+        children: [
+          {
+            path: 'list',
+          },
+          {
+            path: 'star',
+          },
+          {
+            path: 'trash',
+          },
+        ],
+      },
+    ],
+  },
   {
     path: 'survey',
     element: <SurveyLayout />,

@@ -3,7 +3,8 @@ import { Space, Typography } from 'antd'
 import React, { FC, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import useGetUserInfo from 'src/hooks/useGetUserInfo'
-import { HOME_PATHNAME, LOGIN_PATHNAME, MANAGE_INDEX_PATHNAME } from 'src/router'
+import { HOME_PATHNAME, MANAGE_INDEX_PATHNAME } from 'src/router'
+import styles from './Logo.module.scss'
 
 const { Title } = Typography
 
@@ -20,10 +21,14 @@ const Logo: FC = () => {
 
   return (
     <Link to={pathname}>
-      <Space>
-        <FormOutlined />
-        <Title>Survey Master</Title>
-      </Space>
+      <div className={styles.wrapper}>
+        <Space>
+          <Title>
+            <FormOutlined />
+          </Title>
+          <Title>问卷星</Title>
+        </Space>
+      </div>
     </Link>
   )
 }

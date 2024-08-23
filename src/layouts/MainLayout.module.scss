@@ -1,0 +1,30 @@
+.wrapper {
+
+  
+  .header {
+    padding: 0 24px;
+    background-color: aliceblue;
+    height: 64px;
+
+    .left {
+      float:left;
+    }
+  
+    .right {
+      float:right
+    }
+  }
+  
+  .main {
+      min-height: calc(100vh - 64px - 113px);
+  }
+
+  .footer {
+    border-top: 1px solid var(--c-gutter);
+    text-align: center;
+    height: 113px;
+    padding:32px;
+  }
+}
+
+
