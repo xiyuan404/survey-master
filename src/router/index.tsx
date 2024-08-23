@@ -5,6 +5,7 @@ import SurveyLayout from 'src/layouts/SurveyLayout'
 import MainLayout from 'src/layouts/MainLayout'
 import ManageLayout from 'src/layouts/ManageLayout'
 import Home from 'src/pages/Home'
+import NotFound from 'src/pages/NotFound'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
             path: 'trash',
           },
         ],
+      },
+      {
+        path: '*', // 404 路由配置，都写在最后（兜底）
+        element: <NotFound />,
       },
     ],
   },
