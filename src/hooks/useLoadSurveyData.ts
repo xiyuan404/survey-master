@@ -23,7 +23,8 @@ function useLoadSurveyData() {
 
   useEffect(() => {
     if (!data) return
-    const { componentList = [], css = '', js = '', title = '', desc = '' } = data.data
+
+    const { componentList = [], css = '', js = '', title = '', desc = '' } = data
 
     let selectedId = ''
     if (componentList.length > 0) {
