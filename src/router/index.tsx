@@ -4,6 +4,7 @@ import Edit from '../pages/survey/Edit'
 import SurveyLayout from 'src/layouts/SurveyLayout'
 import MainLayout from 'src/layouts/MainLayout'
 import ManageLayout from 'src/layouts/ManageLayout'
+import Home from 'src/pages/Home'
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
+        element: <Home />,
       },
       {
         path: 'login',

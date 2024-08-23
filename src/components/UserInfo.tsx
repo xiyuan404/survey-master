@@ -14,7 +14,7 @@ const UserInfo: FC = () => {
   const nav = useNavigate()
 
   const logout = () => {
-    dispatch(logoutReducer()) // 清空user state 的存储
+    dispatch(logoutReducer()) // 清空store中 user state 的存储
     removeToken() // 清空user token 的存储
     message.success('退出成功')
     nav(LOGIN_PATHNAME)

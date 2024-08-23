@@ -1,0 +1,22 @@
+
+
+.container {
+  width: 100%;
+  background-image: radial-gradient(circle 248px at center, #16d9e3 0%, #30c7ec 47%, #46aef7 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .info {
+
+    text-align: center;
+    button {
+      height: 40px;
+      border-radius: 20px;
+      padding: 0 20px;
+      line-height: 1.2;
+      font-size: 24px;
+  }
+  } 
+}
+

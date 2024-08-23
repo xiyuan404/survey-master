@@ -3,7 +3,7 @@
   
   .header {
     padding: 0 24px;
-    background-color: aliceblue;
+
     height: 64px;
 
     .left {
@@ -17,6 +17,7 @@
   
   .main {
       min-height: calc(100vh - 64px - 113px);
+      display: flex;
   }
 
   .footer {

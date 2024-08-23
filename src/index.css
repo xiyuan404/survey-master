@@ -16,4 +16,10 @@ code {
 
 :root {
   --c-gutter:#e2e2e3;
+  --doger-blue: ##005a9c;
+}
+
+
+html,body {
+  height:100%;
 }

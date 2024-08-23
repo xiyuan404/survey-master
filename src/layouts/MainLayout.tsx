@@ -23,7 +23,12 @@ const MainLayout: FC = () => {
       </Content>
       <Footer className={styles.footer}>
         <p>Released under the MIT License.</p>
-        <p>&copy;2024- present. created By XiYuan </p>
+        <p>
+          &copy;2024- present. created By{' '}
+          <a href="https://github.com/xiyuan404?tab=repositories" style={{ color: '#005a9c' }}>
+            XiYuan
+          </a>
+        </p>
       </Footer>
     </Layout>
   )
