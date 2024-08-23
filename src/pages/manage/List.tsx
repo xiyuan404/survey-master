@@ -1,8 +1,11 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import styles from './common.module.scss'
 import SurveyCard from 'src/components/SurveyCard'
+import { Empty, Typography } from 'antd'
 
-const mockList = [
+const { Title } = Typography
+
+const rawSurveyList = [
   {
     _id: 'item1',
     title: '问卷1',
@@ -30,13 +33,16 @@ const mockList = [
 ]
 
 const List: FC = () => {
+  const [surveyList, setSurveyList] = useState(rawSurveyList)
   return (
     <>
-      <div className={styles.header}>header</div>
+      <div className={styles.header}>
+        <Title level={3}>header</Title>
+      </div>
       <div className={styles.content}>
-        {mockList.map(mock => (
-          <SurveyCard {...mock} />
-        ))}
+        {surveyList.length <= 0 && <Empty />}
+        {surveyList.length > 0 &&
+          rawSurveyList.map(item => <SurveyCard key={item._id} {...item} />)}
       </div>
       <div className={styles.footer}>加载更多</div>
     </>

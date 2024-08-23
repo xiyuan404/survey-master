@@ -7,6 +7,8 @@ import ManageLayout from 'src/layouts/ManageLayout'
 import Home from 'src/pages/Home'
 import NotFound from 'src/pages/NotFound'
 import List from 'src/pages/manage/List'
+import Star from 'src/pages/manage/Star'
+import Trash from 'src/pages/manage/Trash'
 
 const router = createBrowserRouter([
   {
@@ -33,9 +35,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'star',
+            element: <Star />,
           },
           {
             path: 'trash',
+            element: <Trash />,
           },
         ],
       },

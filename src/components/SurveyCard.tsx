@@ -70,7 +70,7 @@ const SurveyCard: FC<propsType> = (props: propsType) => {
               icon={<EditOutlined />}
               size="small"
               type="text"
-              onClick={() => nav(SURVEY_EDIT_PATHNAME)}
+              onClick={() => nav(SURVEY_EDIT_PATHNAME + _id)}
             >
               编辑问卷
             </Button>
