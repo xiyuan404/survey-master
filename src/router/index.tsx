@@ -9,6 +9,8 @@ import NotFound from 'src/pages/NotFound'
 import List from 'src/pages/manage/List'
 import Star from 'src/pages/manage/Star'
 import Trash from 'src/pages/manage/Trash'
+import Register from 'src/pages/Register'
+import Login from 'src/pages/Login'
 
 const router = createBrowserRouter([
   {
@@ -21,9 +23,11 @@ const router = createBrowserRouter([
       },
       {
         path: 'login',
+        element: <Login />,
       },
       {
         path: 'register',
+        element: <Register />,
       },
       {
         path: 'manage',

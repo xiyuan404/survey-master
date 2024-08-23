@@ -15,7 +15,8 @@ const useLoadUserData = () => {
   const { run } = useRequest(UserAPI.get, {
     manual: true,
     onSuccess(result) {
-      const { username, nickname } = result.data
+      const { username, nickname } = result
+
       dispatch(
         loginReducer({
           username,

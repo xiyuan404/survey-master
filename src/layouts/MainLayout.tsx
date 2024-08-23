@@ -4,10 +4,15 @@ import { Outlet } from 'react-router-dom'
 import styles from './MainLayout.module.scss'
 import Logo from 'src/components/Logo'
 import UserInfo from 'src/components/UserInfo'
+import useLoadUserData from 'src/hooks/useLoadUserData'
+import useRedirect from 'src/hooks/useRedirect'
 
 const { Header, Content, Footer } = Layout
 
 const MainLayout: FC = () => {
+  const { waitingUserData } = useLoadUserData()
+  useRedirect(waitingUserData)
+
   return (
     <Layout className={styles.wrapper}>
       <Header className={styles.header}>
