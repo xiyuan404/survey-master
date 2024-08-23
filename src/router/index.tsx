@@ -21,3 +21,18 @@ const router = createBrowserRouter([
 ])
 
 export default router
+
+// -----------常量-----------
+
+export const HOME_PATHNAME = '/'
+export const LOGIN_PATHNAME = '/login'
+export const Register_PATHNAME = '/register'
+export const MANAGE_INDEX_PATHNAME = '/manage/list'
+
+export function isLoginOrRegisterPage(pathname: string) {
+  return [LOGIN_PATHNAME, Register_PATHNAME].includes(pathname)
+}
+
+export function isNoNeedUserInfo(pathname: string) {
+  return [HOME_PATHNAME, LOGIN_PATHNAME, Register_PATHNAME].includes(pathname)
+}
