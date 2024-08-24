@@ -11,7 +11,7 @@ const { Header, Content, Footer } = Layout
 
 const MainLayout: FC = () => {
   const { waitingUserData } = useLoadUserData()
-  useRedirect(waitingUserData)
+  // useRedirect(waitingUserData)
 
   return (
     <Layout className={styles.wrapper}>

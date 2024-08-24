@@ -22,7 +22,7 @@ const UserInfo: FC = () => {
 
   const UserInfo = (
     <>
-      <span>
+      <span style={{ color: '#e8e8e8' }}>
         <UserOutlined />
         {nickname}
       </span>

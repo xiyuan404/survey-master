@@ -16,8 +16,8 @@ const Register: FC = () => {
 
   const { run } = useRequest(
     async values => {
-      const { username, password, nickname } = values
-      await UserAPI.register(username, password, nickname)
+      const { username, password } = values
+      await UserAPI.register(username, password)
     },
     {
       manual: true,
