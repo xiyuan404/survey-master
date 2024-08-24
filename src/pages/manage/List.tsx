@@ -44,7 +44,7 @@ const List: FC = () => {
             <Spin />
           </div>
         )}
-        {list.length <= 0 && <Empty />}
+        {!loading && list.length <= 0 && <Empty />}
         {list.length > 0 &&
           list.map((item: SurveyCardPropsType) => <SurveyCard key={item._id} {...item} />)}
       </div>
