@@ -29,7 +29,7 @@ const ListSearch: FC = () => {
     // 修改地址栏中的url参数
     nav({
       pathname,
-      search: LIST_SEARCH_PARAM_KEY + '=' + value,
+      search: value ? LIST_SEARCH_PARAM_KEY + '=' + value : undefined,
     })
   }
 

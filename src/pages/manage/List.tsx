@@ -3,13 +3,12 @@ import styles from './common.module.scss'
 import SurveyCard, { SurveyCardPropsType } from 'src/components/SurveyCard'
 import { Empty, Spin, Typography } from 'antd'
 import ListSearch from 'src/components/ListSearch'
-import { surveysAPI } from 'src/service/survey'
 import useLoadSurveyListData from 'src/hooks/useLoadSurveyListData'
 
 const { Title } = Typography
 
 const List: FC = () => {
-  const { data: result = {}, loading } = useLoadSurveyListData()
+  const { data: result = {}, loading } = useLoadSurveyListData({})
 
   const { list = [], total = 0 } = result
 
@@ -46,7 +45,8 @@ const List: FC = () => {
           </div>
         )}
         {list.length <= 0 && <Empty />}
-        {list.length > 0 && list.map(item => <SurveyCard key={item._id} {...item} />)}
+        {list.length > 0 &&
+          list.map((item: SurveyCardPropsType) => <SurveyCard key={item._id} {...item} />)}
       </div>
       <div className={styles.footer}>加载更多</div>
     </>

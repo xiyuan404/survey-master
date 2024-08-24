@@ -1,38 +1,11 @@
 import React, { FC, useState } from 'react'
 import styles from './common.module.scss'
-import SurveyCard from 'src/components/SurveyCard'
-import { Button, Empty, Space, Table, Tag, Typography, Modal } from 'antd'
+import { Button, Empty, Space, Table, Tag, Typography, Modal, Spin } from 'antd'
 import ListSearch from 'src/components/ListSearch'
+import useLoadSurveyListData from 'src/hooks/useLoadSurveyListData'
 
 const { Title } = Typography
 const { confirm } = Modal
-
-const rawSurveyList = [
-  {
-    _id: 'item1',
-    title: '问卷1',
-    isPublished: false,
-    isStar: true,
-    answerCount: 1,
-    createAt: '2024-8-14',
-  },
-  {
-    _id: 'item2',
-    title: '问卷1',
-    isPublished: true,
-    isStar: true,
-    answerCount: 1,
-    createAt: '2024-8-14',
-  },
-  {
-    _id: 'item3',
-    title: '问卷1',
-    isPublished: false,
-    isStar: true,
-    answerCount: 1,
-    createAt: '2024-8-14',
-  },
-]
 
 const columns = [
   {
@@ -56,7 +29,9 @@ const columns = [
 ]
 
 const List: FC = () => {
-  const [surveyList, setSurveyList] = useState(rawSurveyList)
+  const { data: result = {}, loading } = useLoadSurveyListData({ isDeleted: true })
+
+  const { list = [], total = 0 } = result
 
   const [selectedId, setSelectedId] = useState<string[]>([])
 
@@ -91,7 +66,7 @@ const List: FC = () => {
             setSelectedId(selectedRowKeys as string[])
           },
         }}
-        dataSource={surveyList}
+        dataSource={list}
         columns={columns}
         pagination={false}
         rowKey={survey => survey._id}
@@ -107,8 +82,13 @@ const List: FC = () => {
           <ListSearch />
         </div>
       </div>
-      {surveyList.length <= 0 && <Empty />}
-      {surveyList.length > 0 && RenderTable}
+      {loading && (
+        <div style={{ textAlign: 'center' }}>
+          <Spin />
+        </div>
+      )}
+      {!loading && list.length <= 0 && <Empty />}
+      {list.length > 0 && RenderTable}
       <div className={styles.footer}>分页</div>
     </>
   )
