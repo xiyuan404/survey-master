@@ -86,7 +86,9 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
   }
 
   if (isDeleted) return null
-  if (pathname.match('/manage/star') && !isStarState) return null
+
+  // 部分匹配 manage/star?keyword=test
+  if (pathname.indexOf('/manage/star') > -1 && !isStarState) return null
 
   return (
     <div className={styles.container}>

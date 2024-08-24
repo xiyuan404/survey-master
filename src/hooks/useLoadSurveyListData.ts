@@ -14,7 +14,7 @@ const useLoadSurveyList = (opt: Partial<OptionType>) => {
 
   const [isFirstLoading, setIsFistLoading] = useState(true)
 
-  const { data, loading } = useRequest(
+  const { data, loading, refresh } = useRequest(
     async () => {
       const keyword = searchParams.get(LIST_SEARCH_PARAM_KEY) || undefined
       const { isStar, isDeleted } = opt
@@ -34,7 +34,7 @@ const useLoadSurveyList = (opt: Partial<OptionType>) => {
     }
   )
 
-  return { data, loading, isFirstLoading }
+  return { data, loading, isFirstLoading, refresh }
 }
 
 export default useLoadSurveyList
