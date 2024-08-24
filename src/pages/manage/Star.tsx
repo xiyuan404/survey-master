@@ -4,6 +4,7 @@ import SurveyCard, { SurveyCardPropsType } from 'src/components/SurveyCard'
 import { Empty, Spin, Typography } from 'antd'
 import ListSearch from 'src/components/ListSearch'
 import useLoadSurveyListData from 'src/hooks/useLoadSurveyListData'
+import ListPagination from 'src/components/ListPagination'
 
 const { Title } = Typography
 
@@ -30,7 +31,9 @@ const List: FC = () => {
         {list.length > 0 &&
           list.map((item: SurveyCardPropsType) => <SurveyCard key={item._id} {...item} />)}
       </div>
-      <div className={styles.footer}>分页</div>
+      <div className={styles.footer}>
+        <ListPagination total={total} />
+      </div>
     </>
   )
 }
