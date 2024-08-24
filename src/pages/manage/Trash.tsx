@@ -65,18 +65,33 @@ const List: FC = () => {
       onSuccess() {
         message.success('恢复成功')
         refresh() // 恢复后手动刷新列表
+        setSelectedIds([])
+      },
+    }
+  )
+
+  // 撤离删除
+
+  const { run: deleteBatch, loading: deleteBatchLoading } = useRequest(
+    async () => {
+      await surveysAPI.deleteBatch(selectedIds)
+    },
+    {
+      manual: true,
+      onSuccess() {
+        message.success('删除成功') // 提示删除成功
+        refresh() // 手动重新请求
+        setSelectedIds([]) // 重置选中table rows
       },
     }
   )
 
   const del = () => {
     confirm({
-      title: '删除后不可恢复',
+      title: '确定删除该问卷?',
+      content: '删除以后不可找回',
       type: 'warning',
-      onOk: () => {
-        console.log(selectedIds)
-      },
-      onCancel: () => {},
+      onOk: deleteBatch,
     })
   }
 
@@ -87,7 +102,7 @@ const List: FC = () => {
           <Button type="primary" disabled={selectedIds.length <= 0} onClick={recover}>
             恢复
           </Button>
-          <Button danger disabled={selectedIds.length <= 0} onClick={del}>
+          <Button danger disabled={selectedIds.length <= 0 || deleteBatchLoading} onClick={del}>
             撤离删除
           </Button>
         </Space>

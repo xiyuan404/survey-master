@@ -34,8 +34,14 @@ export const surveysAPI = {
     const data = (await instance.get(BASE_URL, { params: opt })) as ResDataType
     return data
   },
+  // 复制单个问卷
   duplicate: async (id: string): Promise<ResDataType> => {
     const data = (await instance.post(BASE_URL + 'duplicate/' + id)) as ResDataType
+    return data
+  },
+  // 批量删除怎么写？符合restfulAPI的命名规范
+  deleteBatch: async (ids: string[]): Promise<ResDataType> => {
+    const data = (await instance.delete(BASE_URL, { data: ids })) as ResDataType
     return data
   },
 }
