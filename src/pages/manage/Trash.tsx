@@ -1,8 +1,10 @@
 import React, { FC, useState } from 'react'
 import styles from './common.module.scss'
-import { Button, Empty, Space, Table, Tag, Typography, Modal, Spin } from 'antd'
+import { Button, Empty, Space, Table, Tag, Typography, Modal, Spin, Divider } from 'antd'
 import ListSearch from 'src/components/ListSearch'
 import useLoadSurveyListData from 'src/hooks/useLoadSurveyListData'
+
+import ListPagination from 'src/components/ListPagination'
 
 const { Title } = Typography
 const { confirm } = Modal
@@ -29,7 +31,7 @@ const columns = [
 ]
 
 const List: FC = () => {
-  const { data: result = {}, loading } = useLoadSurveyListData({ isDeleted: true })
+  const { data: result = {}, loading, isFirstLoading } = useLoadSurveyListData({ isDeleted: true })
 
   const { list = [], total = 0 } = result
 
@@ -82,14 +84,21 @@ const List: FC = () => {
           <ListSearch />
         </div>
       </div>
-      {loading && (
-        <div style={{ textAlign: 'center' }}>
-          <Spin />
-        </div>
-      )}
+
       {!loading && list.length <= 0 && <Empty />}
       {list.length > 0 && RenderTable}
-      <div className={styles.footer}>分页</div>
+      <Divider />
+
+      <div className={styles.footer}>
+        <Space>
+          {loading && (
+            <div style={{ textAlign: 'center' }}>
+              <Spin />
+            </div>
+          )}
+          {!isFirstLoading && <ListPagination total={total} />}
+        </Space>
+      </div>
     </>
   )
 }

@@ -36,7 +36,7 @@ const ListPagination: FC<PropsType> = (props: PropsType) => {
     searchParams.set(LIST_PAGE_SIZE_PARAM_KEY, pageSize.toString())
     nav({
       pathname,
-      search: searchParams.toString(),
+      search: searchParams.toString(), // 除了改变url查询参数中page,pageSize之外，其他的参数参数也要带上
     })
   }
 

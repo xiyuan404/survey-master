@@ -1,4 +1,5 @@
 import { useRequest } from 'ahooks'
+import { useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { LIST_SEARCH_PARAM_KEY } from 'src/constants'
 import { surveysAPI } from 'src/service/survey'
@@ -10,6 +11,8 @@ type OptionType = {
 
 const useLoadSurveyList = (opt: Partial<OptionType>) => {
   const [searchParams] = useSearchParams()
+
+  const [isFirstLoading, setIsFistLoading] = useState(true)
 
   const { data, loading } = useRequest(
     async () => {
@@ -25,10 +28,13 @@ const useLoadSurveyList = (opt: Partial<OptionType>) => {
     },
     {
       refreshDeps: [searchParams], // 刷新（重新请求）的依赖项
+      onSuccess() {
+        setIsFistLoading(false)
+      },
     }
   )
 
-  return { data, loading }
+  return { data, loading, isFirstLoading }
 }
 
 export default useLoadSurveyList
