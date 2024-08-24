@@ -126,7 +126,7 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
               icon={<LineChartOutlined />}
               type="text"
               size="small"
-              onClick={() => nav(SURVEY_EDIT_PATHNAME + _id)}
+              onClick={() => nav(SURVEY_STAT_PATHNAME + _id)}
               disabled={!isPublished}
             >
               问卷统计

@@ -11,6 +11,7 @@ import Star from 'src/pages/manage/Star'
 import Trash from 'src/pages/manage/Trash'
 import Register from 'src/pages/Register'
 import Login from 'src/pages/Login'
+import Stat from 'src/pages/survey/Stat'
 
 const router = createBrowserRouter([
   {
@@ -61,10 +62,10 @@ const router = createBrowserRouter([
         path: 'edit/:id',
         element: <Edit />,
       },
-      // {
-      //   path: 'stat/id',
-      //   element: <Stat />,
-      // },
+      {
+        path: 'stat/:id',
+        element: <Stat />,
+      },
     ],
   },
 ])
@@ -78,7 +79,7 @@ export const LOGIN_PATHNAME = '/login'
 export const Register_PATHNAME = '/register'
 export const MANAGE_INDEX_PATHNAME = '/manage/list'
 export const SURVEY_EDIT_PATHNAME = '/survey/edit/'
-export const SURVEY_STAT_PATHNAME = '/survey/state/'
+export const SURVEY_STAT_PATHNAME = '/survey/stat/'
 
 export function isLoginOrRegisterPage(pathname: string) {
   return [LOGIN_PATHNAME, Register_PATHNAME].includes(pathname)

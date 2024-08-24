@@ -7,9 +7,15 @@ import { changeSelectedId } from 'src/store/componentsReducer'
 import LeftPanel from './LeftPanel'
 import RightPanel from './RightPanel'
 import EditHeader from './EditHeader'
+import useGetPageInfo from 'src/hooks/useGetPageInfo'
+import { useTitle } from 'ahooks'
 
 const Edit: FC = () => {
   const { loading, error } = useLoadSurveyData()
+
+  const { title } = useGetPageInfo()
+  useTitle('编辑页 - ' + title)
+
   const dispatch = useDispatch()
   const clearSelectedId = () => {
     dispatch(changeSelectedId(''))

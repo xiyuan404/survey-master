@@ -29,7 +29,7 @@ function useLoadSurveyData() {
   useEffect(() => {
     if (!data) return
 
-    const { componentList = [], css = '', js = '', title = '', desc = '' } = data
+    const { componentList = [], css = '', js = '', title = '', desc = '', isPublished } = data
 
     let selectedId = ''
     if (componentList.length > 0) {
@@ -39,7 +39,7 @@ function useLoadSurveyData() {
     dispatch(resetComponents({ componentList, selectedId, copiedComponentInfo: null }))
 
     // 把pageInfo存储到Redux store中
-    dispatch(resetPageInfo({ css, js, title, desc }))
+    dispatch(resetPageInfo({ css, js, title, desc, isPublished }))
   }, [data])
 
   useEffect(() => {
