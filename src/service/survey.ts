@@ -29,8 +29,8 @@ export const surveysAPI = {
     return data
   },
   // 获取（查询）问卷列表
-  list: async (): Promise<ResDataType> => {
-    const data = (await instance.get(BASE_URL)) as ResDataType
+  list: async (opt: Partial<SearchOptions>): Promise<ResDataType> => {
+    const data = (await instance.get(BASE_URL, { params: opt })) as ResDataType
     return data
   },
 }

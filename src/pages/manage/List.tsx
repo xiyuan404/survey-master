@@ -4,25 +4,30 @@ import SurveyCard, { SurveyCardPropsType } from 'src/components/SurveyCard'
 import { Empty, Spin, Typography } from 'antd'
 import ListSearch from 'src/components/ListSearch'
 import { surveysAPI } from 'src/service/survey'
+import useLoadSurveyListData from 'src/hooks/useLoadSurveyListData'
 
 const { Title } = Typography
 
 const List: FC = () => {
-  // 不依赖useRequest版本获取问卷列表
+  const { data: result = {}, loading } = useLoadSurveyListData()
+
+  const { list = [], total = 0 } = result
+
+  /* // 不依赖useRequest版本获取问卷列表
   const [list, setList] = useState<SurveyCardPropsType[]>([])
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     async function load() {
       setLoading(true)
-      const data = await surveysAPI.list()
+      const data = await surveysAPI.list({})
       const { list = [], total = 0 } = data
       setList(list)
       setTotal(total)
       setLoading(false)
     }
     load()
-  }, [])
+  }, []) */
 
   return (
     <>
