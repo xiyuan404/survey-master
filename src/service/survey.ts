@@ -34,4 +34,8 @@ export const surveysAPI = {
     const data = (await instance.get(BASE_URL, { params: opt })) as ResDataType
     return data
   },
+  duplicate: async (id: string): Promise<ResDataType> => {
+    const data = (await instance.post(BASE_URL + 'duplicate/' + id)) as ResDataType
+    return data
+  },
 }

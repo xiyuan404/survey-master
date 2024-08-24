@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 
 import styles from './SurveyCard.module.scss'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Button, Divider, Popconfirm, Space, Tag, Modal, message } from 'antd'
 import {
   CopyOutlined,
@@ -29,6 +29,7 @@ export type SurveyCardPropsType = {
 const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
   const { _id, isPublished, isStar, title, answerCount, createAt } = props
   const nav = useNavigate()
+  const { pathname } = useLocation()
 
   // 修改标星
   const [isStarState, setIsStarState] = useState(isStar)
@@ -45,9 +46,30 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
     }
   )
 
-  const duplicate = () => {
-    console.log('duplicate')
-  }
+  // 复制
+  const { run: duplicate } = useRequest(async () => await surveysAPI.duplicate(_id), {
+    manual: true,
+    onSuccess(data) {
+      // 复制成功,跳转到问卷编辑页
+      const { id } = data
+      message.success('复制成功')
+      nav('/survey/edit/' + id)
+    },
+  })
+
+  // 删除
+  const [isDeleted, setIsDeleted] = useState(false)
+  const { run: deleteSurvey } = useRequest(
+    async () => await surveysAPI.update(_id, { isDeleted: true }),
+    {
+      manual: true,
+      onSuccess() {
+        message.success('删除成功')
+        // 删除成功，隐藏surveyCard
+        setIsDeleted(true)
+      },
+    }
+  )
 
   const del = () => {
     confirm({
@@ -56,8 +78,12 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
       content: '你确定要删除这份问卷吗？',
       okText: '确认',
       cancelText: '取消',
+      onOk: deleteSurvey,
     })
   }
+
+  if (isDeleted) return null
+  if (pathname.match('/manage/star') && !isStarState) return null
 
   return (
     <div className={styles.container}>
