@@ -14,6 +14,7 @@ const BASE_URL = '/surveys/'
 
 export const surveysAPI = {
   // 更新单个问卷
+  // Partial<Pick<SearchOptions, 'isDeleted' | 'isStar'>>;
   update: async (id: string, opt: { [key: string]: any }): Promise<ResDataType> => {
     const data = (await instance.patch(BASE_URL + id, opt)) as ResDataType
     return data

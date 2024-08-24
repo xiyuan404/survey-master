@@ -1,8 +1,8 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 import styles from './SurveyCard.module.scss'
 import { Link, useNavigate } from 'react-router-dom'
-import { Button, Divider, Popconfirm, Space, Tag, Modal } from 'antd'
+import { Button, Divider, Popconfirm, Space, Tag, Modal, message } from 'antd'
 import {
   CopyOutlined,
   DeleteOutlined,
@@ -12,6 +12,8 @@ import {
   StarOutlined,
 } from '@ant-design/icons'
 import { SURVEY_EDIT_PATHNAME, SURVEY_STAT_PATHNAME } from 'src/router'
+import { useRequest } from 'ahooks'
+import { surveysAPI } from 'src/service/survey'
 
 const { confirm } = Modal
 
@@ -27,6 +29,21 @@ export type SurveyCardPropsType = {
 const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
   const { _id, isPublished, isStar, title, answerCount, createAt } = props
   const nav = useNavigate()
+
+  // 修改标星
+  const [isStarState, setIsStarState] = useState(isStar)
+  const { run: changeStar, loading: changeStarLoading } = useRequest(
+    async () => {
+      await surveysAPI.update(_id, { isStar: !isStarState })
+    },
+    {
+      manual: true,
+      onSuccess() {
+        setIsStarState(!isStarState)
+        message.success('更新成功')
+      },
+    }
+  )
 
   const duplicate = () => {
     console.log('duplicate')
@@ -48,7 +65,7 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
         <div className={styles.left}>
           <Link to={isPublished ? SURVEY_EDIT_PATHNAME : SURVEY_STAT_PATHNAME}>
             <Space>
-              {isStar && <StarOutlined />}
+              {isStarState && <StarOutlined />}
               {title}
             </Space>
           </Link>
@@ -87,8 +104,14 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
         </div>
         <div className={styles.right}>
           <Space>
-            <Button icon={<StarOutlined />} type="text" size="small">
-              标星
+            <Button
+              icon={<StarOutlined />}
+              type="text"
+              size="small"
+              disabled={changeStarLoading}
+              onClick={changeStar}
+            >
+              {isStarState ? '取消标星' : '标星'}
             </Button>
 
             <Popconfirm
