@@ -47,19 +47,22 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
   )
 
   // 复制
-  const { run: duplicate } = useRequest(async () => await surveysAPI.duplicate(_id), {
-    manual: true,
-    onSuccess(data) {
-      // 复制成功,跳转到问卷编辑页
-      const { id } = data
-      message.success('复制成功')
-      nav('/survey/edit/' + id)
-    },
-  })
+  const { run: duplicate, loading: duplicateLoading } = useRequest(
+    async () => await surveysAPI.duplicate(_id),
+    {
+      manual: true,
+      onSuccess(data) {
+        // 复制成功,跳转到问卷编辑页
+        const { id } = data
+        message.success('复制成功')
+        nav('/survey/edit/' + id)
+      },
+    }
+  )
 
   // 删除
   const [isDeleted, setIsDeleted] = useState(false)
-  const { run: deleteSurvey } = useRequest(
+  const { run: deleteSurvey, loading: deleteLoading } = useRequest(
     async () => await surveysAPI.update(_id, { isDeleted: true }),
     {
       manual: true,
@@ -147,11 +150,17 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
               cancelText="取消"
               onConfirm={duplicate}
             >
-              <Button icon={<CopyOutlined />} type="text" size="small">
+              <Button icon={<CopyOutlined />} type="text" size="small" disabled={duplicateLoading}>
                 复制
               </Button>
             </Popconfirm>
-            <Button icon={<DeleteOutlined />} type="text" size="small" onClick={del}>
+            <Button
+              icon={<DeleteOutlined />}
+              type="text"
+              size="small"
+              onClick={del}
+              disabled={deleteLoading}
+            >
               删除
             </Button>
           </Space>
