@@ -12,6 +12,7 @@ import { changePageTitle } from 'src/store/pageInfoReducer'
 import useGetComponentInfo from 'src/hooks/useGetComponentInfo'
 import { useDebounceEffect, useKeyPress, useRequest } from 'ahooks'
 import { surveysAPI } from 'src/service/survey'
+import { SURVEY_STAT_PATHNAME } from 'src/router'
 
 const { Title } = Typography
 
@@ -106,7 +107,7 @@ const PublishButton = () => {
       manual: true,
       onSuccess() {
         message.success('发布成功')
-        nav('survey/stat/' + id)
+        nav(SURVEY_STAT_PATHNAME + id)
       },
     }
   )

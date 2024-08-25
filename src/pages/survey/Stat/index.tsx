@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import useGetPageInfo from 'src/hooks/useGetPageInfo'
 import useLoadSurveyData from 'src/hooks/useLoadSurveyData'
 import styles from './index.module.scss'
+import StatHeader from './StatHeader'
 
 const Stat: FC = () => {
   const { loading } = useLoadSurveyData()
@@ -44,7 +45,7 @@ const Stat: FC = () => {
     )
   return (
     <div className={styles.container}>
-      <div className={styles.header}>头部</div>
+      <StatHeader title={title} />
       <div className={styles.content}>
         <div className={styles.left}>左</div>
         <div className={styles.main}>中</div>
