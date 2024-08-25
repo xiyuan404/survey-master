@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import Script from 'next/script'
 import React, { FC } from 'react'
+import styles from '@/styles/Common.module.scss'
 
 type PropsType = {
   title: string
@@ -22,7 +23,7 @@ const PageWrapper: FC<PropsType> = (props) => {
         <style>{css}</style>
       </Head>
       <style>{css}</style>
-      <main>{children}</main>
+      <main className={styles.container}>{children}</main>
       <Script id="page-js">{js}</Script>
     </>
   )
