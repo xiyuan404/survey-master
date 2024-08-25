@@ -4,7 +4,8 @@ import React, { FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useGetPageInfo from 'src/hooks/useGetPageInfo'
 import useLoadSurveyData from 'src/hooks/useLoadSurveyData'
-import useLoadSurveyList from 'src/hooks/useLoadSurveyListData'
+import styles from './index.module.scss'
+
 const Stat: FC = () => {
   const { loading } = useLoadSurveyData()
   const { title, isPublished } = useGetPageInfo()
@@ -41,7 +42,16 @@ const Stat: FC = () => {
         }
       />
     )
-  return <div>stat</div>
+  return (
+    <div className={styles.container}>
+      <div className={styles.header}>头部</div>
+      <div className={styles.content}>
+        <div className={styles.left}>左</div>
+        <div className={styles.main}>中</div>
+        <div className={styles.right}>右</div>
+      </div>
+    </div>
+  )
 }
 
 export default Stat
