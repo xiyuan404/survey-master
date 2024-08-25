@@ -1,11 +1,12 @@
 import { useTitle } from 'ahooks'
 import { Button, Result, Spin } from 'antd'
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useGetPageInfo from 'src/hooks/useGetPageInfo'
 import useLoadSurveyData from 'src/hooks/useLoadSurveyData'
 import styles from './index.module.scss'
 import StatHeader from './StatHeader'
+import ComponentList from './ComponentList'
 
 const Stat: FC = () => {
   const { loading } = useLoadSurveyData()
@@ -14,6 +15,10 @@ const Stat: FC = () => {
 
   // 修改标题
   useTitle('问卷统计 - ' + title)
+
+  // 状态提升 selected id 和 type
+  const [selectedComponentId, setSelectedComponentId] = useState('')
+  const [selectedComponentType, setSelectedComponentType] = useState('')
 
   /**
    * 当问卷信息还在加载时，显示loading indicator
@@ -47,7 +52,13 @@ const Stat: FC = () => {
     <div className={styles.container}>
       <StatHeader title={title} />
       <div className={styles.content}>
-        <div className={styles.left}>左</div>
+        <div className={styles.left}>
+          <ComponentList
+            selectedComponentId={selectedComponentId}
+            setSelectedComponentId={setSelectedComponentId}
+            setSelectedComponentType={setSelectedComponentType}
+          />
+        </div>
         <div className={styles.main}>中</div>
         <div className={styles.right}>右</div>
       </div>
