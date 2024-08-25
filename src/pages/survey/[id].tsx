@@ -67,6 +67,9 @@ export default function Survey(props: PropsType) {
     <>
       {componentList.map((cmpInfo) => {
         const ComponentElem = getComponentByInfo(cmpInfo)
+
+        if (!ComponentElem) return null
+
         return (
           <div key={cmpInfo.fe_id} className={styles.componentWrapper}>
             {ComponentElem}
