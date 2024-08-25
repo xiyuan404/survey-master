@@ -1,3 +1,4 @@
+import StatComponent from './StatComponent'
 import Component from './Component'
 import { SurveyCheckboxDefaultProps } from './interface'
 import PropsComponent from './PropsComponent'
@@ -10,4 +11,5 @@ export default {
   Component,
   PropsComponent,
   defaultProps: SurveyCheckboxDefaultProps,
+  StatComponent,
 }

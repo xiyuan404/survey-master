@@ -4,8 +4,11 @@ import SurveyInputConf, { SurveyInputPropsType } from './SurveyInput'
 import SurveyParagraphConf, { SurveyParagraphPropsType } from './SurveyParagraph'
 import SurveyInfoConf, { SurveyInfoPropsType } from './SurveyInfo'
 import SurveyTextareaConf, { SurveyTextareaPropsType } from './SurveyTextarea'
-import SurveyRadioConf, { SurveyRadioPropsType } from './SurveyRadio'
-import SurveyCheckboxConf, { SurveyCheckboxPropsType } from './SurveyCheckbox'
+import SurveyRadioConf, { SurveyRadioPropsType, SurveyRadioStatPropsType } from './SurveyRadio'
+import SurveyCheckboxConf, {
+  SurveyCheckboxPropsType,
+  SurveyCheckboxStatPropsType,
+} from './SurveyCheckbox'
 
 export type ComponentPropsType = SurveyInputPropsType &
   SurveyTitlePropsType &
@@ -15,12 +18,17 @@ export type ComponentPropsType = SurveyInputPropsType &
   SurveyRadioPropsType &
   SurveyCheckboxPropsType
 
+// 统一， 组件的统计属性类型
+
+type ComponentStatPropsType = SurveyRadioStatPropsType & SurveyCheckboxStatPropsType
+
 export type ComponentConfType = {
   type: string
   title: string
   PropsComponent: FC<ComponentPropsType>
   Component: FC<ComponentPropsType>
   defaultProps: ComponentPropsType
+  StatComponent?: FC<ComponentStatPropsType>
 }
 
 const ComponentConfList: ComponentConfType[] = [

@@ -1,7 +1,11 @@
 import { useRequest } from 'ahooks'
 import React, { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { getComponentConfByType } from 'src/components/SurveyComponents'
 import { statAPI } from 'src/service/stat'
+import { Typography } from 'antd'
+
+const { Title } = Typography
 
 type PropsType = {
   selectedComponentId: string
@@ -9,7 +13,7 @@ type PropsType = {
 }
 
 const ChartStat: FC<PropsType> = (props: PropsType) => {
-  const { selectedComponentId } = props
+  const { selectedComponentId, selectedComponentType } = props
 
   const { id: surveyId } = useParams()
 
@@ -34,7 +38,16 @@ const ChartStat: FC<PropsType> = (props: PropsType) => {
     run(surveyId, selectedComponentId)
   }, [selectedComponentId])
 
-  return <div>stat:{JSON.stringify(stat)}</div>
+  const { StatComponent } = getComponentConfByType(selectedComponentType) || {}
+
+  if (StatComponent == null) return <div>该组件不需统计</div>
+
+  return (
+    <div>
+      <Title level={3}>图表统计</Title>
+      <StatComponent stat={stat} />
+    </div>
+  )
 }
 
 export default ChartStat

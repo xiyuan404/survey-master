@@ -21,3 +21,7 @@ export const SurveyCheckboxDefaultProps: SurveyCheckboxPropsType = {
     { label: '选项3', value: 'item3', checked: false },
   ],
 }
+
+export type SurveyCheckboxStatPropsType = {
+  stat: Array<{ name: string; count: number }>
+}

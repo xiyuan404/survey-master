@@ -23,3 +23,9 @@ export const SurveyRadioDefaultProps = {
   ],
   selected: '',
 }
+
+// 统计组件的属性类型
+
+export type SurveyRadioStatPropsType = {
+  stat: Array<{ name: string; count: number }>
+}

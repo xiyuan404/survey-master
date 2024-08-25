@@ -27,33 +27,28 @@ const Stat: FC = () => {
    * Guard Clause
    */
 
-  if (loading)
-    return (
-      <div style={{ textAlign: 'center' }}>
-        <Spin />
-      </div>
-    )
+  const LoadingElem = (
+    <div style={{ textAlign: 'center' }}>
+      <Spin />
+    </div>
+  )
 
-  /**
-   * (early Return Pattern)
-   *  当前页面未发布时，不继续渲染问卷统计页
-   */
-  if (!isPublished)
+  const renderContent = () => {
+    if (typeof isPublished === 'boolean' && !isPublished)
+      return (
+        <Result
+          status="warning"
+          title="当前页面还未存在"
+          extra={
+            <Button type="primary" onClick={() => nav(-1)}>
+              返回
+            </Button>
+          }
+        />
+      )
+
     return (
-      <Result
-        status="warning"
-        title="当前页面还未存在"
-        extra={
-          <Button type="primary" onClick={() => nav(-1)}>
-            返回
-          </Button>
-        }
-      />
-    )
-  return (
-    <div className={styles.container}>
-      <StatHeader title={title} />
-      <div className={styles.content}>
+      <>
         <div className={styles.left}>
           <ComponentList
             selectedComponentId={selectedComponentId}
@@ -74,7 +69,15 @@ const Stat: FC = () => {
             selectedComponentType={selectedComponentType}
           />
         </div>
-      </div>
+      </>
+    )
+  }
+
+  return (
+    <div className={styles.container}>
+      <StatHeader title={title} />
+      {loading && LoadingElem}
+      {!loading && <div className={styles.content}>{renderContent()}</div>}
     </div>
   )
 }
