@@ -1,5 +1,5 @@
 import { Header } from 'antd/es/layout/layout'
-import React, { FC, useRef } from 'react'
+import React, { FC, useMemo, useRef } from 'react'
 
 import styles from './StatHeader.module.scss'
 import { Button, Input, InputRef, message, Popover, Space, Tooltip, Typography } from 'antd'
@@ -30,7 +30,7 @@ const StatHeader: FC<StatHeaderPropsType> = (props: StatHeaderPropsType) => {
     message.success('copied to clipboard')
   }
 
-  const RenderURL = () => {
+  const LinkAndQRCodeElem = useMemo(() => {
     const url = `http://localhost:3000/survey/${id}`
 
     const QRCodeElem = (
@@ -50,7 +50,7 @@ const StatHeader: FC<StatHeaderPropsType> = (props: StatHeaderPropsType) => {
         </Popover>
       </Space>
     )
-  }
+  }, [id])
 
   return (
     <div className={styles.header}>
@@ -62,7 +62,7 @@ const StatHeader: FC<StatHeaderPropsType> = (props: StatHeaderPropsType) => {
           <Title>{title}</Title>
         </Space>
       </div>
-      <div className={styles.main}>{RenderURL()}</div>
+      <div className={styles.main}>{LinkAndQRCodeElem}</div>
       <div className={styles.right}>
         <Button
           type="primary"
