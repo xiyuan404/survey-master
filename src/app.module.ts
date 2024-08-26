@@ -5,6 +5,7 @@ import { SurveyModule } from './survey/survey.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,17 +16,18 @@ import { UsersModule } from './users/users.module';
     ),
     SurveyModule,
     UsersModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
   constructor() {
-    console.log(
+    /*  console.log(
       'MongoDB Connection URI:',
       process.env.HOST,
       process.env.PORT,
       process.env.DATABASE,
-    );
+    ); */
   }
 }

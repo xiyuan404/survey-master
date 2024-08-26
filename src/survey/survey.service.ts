@@ -8,10 +8,11 @@ export class SurveyService {
   // 依赖注入
   constructor(@InjectModel(Survey.name) private surveyModel: Model<Survey>) {}
 
-  async create() {
+  async create(username: string) {
     const survey = new this.surveyModel({
       title: 'title-' + Date.now(),
       desc: 'desc',
+      author: username,
     });
     return await survey.save();
   }

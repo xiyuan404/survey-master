@@ -1,4 +1,12 @@
-import { Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Query,
+  Request,
+} from '@nestjs/common';
 import { SurveyService } from './survey.service';
 
 @Controller('surveys')
@@ -7,8 +15,9 @@ export class SurveyController {
   constructor(private readonly surveyService: SurveyService) {}
 
   @Post()
-  create() {
-    return this.surveyService.create();
+  create(@Request() req) {
+    const { username } = req.user;
+    return this.surveyService.create(username);
   }
 
   @Get(':id')
