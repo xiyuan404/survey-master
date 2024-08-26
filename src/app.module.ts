@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { SurveyModule } from './survey/survey.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ConfigModule } from '@nestjs/config';
       `mongodb://${process.env.HOST}:${process.env.PORT}/${process.env.DATABASE}`,
     ),
     SurveyModule,
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

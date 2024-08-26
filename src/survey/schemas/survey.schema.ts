@@ -3,7 +3,9 @@ import { HydratedDocument } from 'mongoose';
 
 export type SurveyDocument = HydratedDocument<Survey>;
 
-@Schema()
+@Schema({
+  timestamps: true, // record createdAt updatedAt timestamp
+})
 export class Survey {
   @Prop()
   title: string;
