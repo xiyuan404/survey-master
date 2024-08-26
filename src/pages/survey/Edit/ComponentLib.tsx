@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useCallback } from 'react'
 import { componentConfGroup, ComponentConfType } from 'src/components/SurveyComponents'
 import { Typography } from 'antd'
 import Styles from './ComponentLib.module.scss'
@@ -11,7 +11,7 @@ const RenderComponent: FC<ComponentConfType> = (cmpConf: ComponentConfType) => {
   const { Component, title, type, defaultProps } = cmpConf
 
   const dispatch = useDispatch()
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     dispatch(
       addComponent({
         fe_id: nanoid(),
@@ -20,7 +20,7 @@ const RenderComponent: FC<ComponentConfType> = (cmpConf: ComponentConfType) => {
         props: defaultProps,
       })
     )
-  }
+  }, [])
 
   return (
     <div key={type} className={Styles['component-wrapper']} onClick={handleClick}>
