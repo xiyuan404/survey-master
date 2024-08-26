@@ -19,6 +19,6 @@ export const post = async (url: string, body: any) => {
     method: 'post',
     body: JSON.stringify(body),
   })
-  const data = res.json()
+  const data = await res.json()
   return data as ResDataType
 }
