@@ -4,11 +4,6 @@ import { SurveyCheckboxStatPropsType } from './interface'
 
 const StatComponent: FC<SurveyCheckboxStatPropsType> = props => {
   const { stat = [] } = props
-  const sum = useMemo(() => {
-    let s = 0
-    stat.forEach(i => (s += i.count))
-    return s
-  }, [stat])
 
   return (
     <div style={{ width: '400px', height: '300px' }}>

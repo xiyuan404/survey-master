@@ -6,25 +6,23 @@ import Component from './Component'
 
 describe.skip('paragraph', () => {
   test('默认属性', () => {
-    render(<Component />)
+    const { container } = render(<Component />)
     const span = screen.getByText('一行段落')
     expect(span).toBeInTheDocument()
 
-    const p = span.parentElement
-    expect(p).not.toBeNull()
+    expect(container).not.toBeNull()
 
-    expect(p!.style.textAlign).toBe('start')
+    expect(container!.style.textAlign).toBe('start')
   })
 
   test('传入属性', () => {
-    render(<Component text="text" isCenter={true} />)
+    const { container } = render(<Component text="text" isCenter={true} />)
     const span = screen.getByText('text')
     expect(span).toBeInTheDocument()
 
-    const p = span.parentElement
-    expect(p).not.toBeNull()
+    expect(container).not.toBeNull()
 
-    expect(p!.style.textAlign).toBe('center')
+    expect(container!.style.textAlign).toBe('center')
   })
 
   test('换行显示', () => {

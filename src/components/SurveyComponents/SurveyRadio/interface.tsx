@@ -17,11 +17,11 @@ export const SurveyRadioDefaultProps = {
   title: '单选标题',
   isVertical: false,
   list: [
-    { label: 'item1', value: 'item1' },
-    { label: 'item2', value: 'item2' },
-    { label: 'item3', value: 'item3' },
+    { label: 'label1', value: 'val1' },
+    { label: 'label2', value: 'val2' },
+    { label: 'label3', value: 'val3' },
   ],
-  selected: '',
+  selected: 'val1',
 }
 
 // 统计组件的属性类型

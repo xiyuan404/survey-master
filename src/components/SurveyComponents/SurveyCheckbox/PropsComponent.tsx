@@ -13,7 +13,7 @@ const PropsComponent: FC<SurveyCheckboxPropsType> = (props: SurveyCheckboxPropsT
       opts,
       isVertical,
     })
-  }, [title, opts, isVertical])
+  }, [title, opts, isVertica, form])
 
   const handleValuesChange = () => {
     if (onChange) {
