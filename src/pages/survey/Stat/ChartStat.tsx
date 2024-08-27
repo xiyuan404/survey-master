@@ -36,7 +36,7 @@ const ChartStat: FC<PropsType> = (props: PropsType) => {
   // 每次选中组件改变，触发重新请求对应图表统计数据
   useEffect(() => {
     run(surveyId, selectedComponentId)
-  }, [selectedComponentId])
+  }, [selectedComponentId, surveyId, run])
 
   const { StatComponent } = getComponentConfByType(selectedComponentType) || {}
 
