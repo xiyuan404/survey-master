@@ -12,8 +12,8 @@ export class Answer {
 
   @Prop()
   answerList: {
-    componentFeId: string;
-    value: string | string[];
+    componentId: string;
+    value: string;
   }[];
 }
 

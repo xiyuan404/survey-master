@@ -10,11 +10,13 @@ export class StatService {
   ) {}
 
   private _getRadioOptText(value, props: any = {}) {
-    const { options = [] } = props;
-    const length = options.length;
+    const { list = [] } = props;
+    const length = list.length;
 
     for (let i = 0; i < length; i++) {
-      const item = options[i];
+      const item = list[i];
+      console.log('radio', item);
+
       if (item.value === value) {
         return item.label;
       }
@@ -28,6 +30,8 @@ export class StatService {
 
     for (let i = 0; i < length; i++) {
       const item = opts[i];
+      console.log('checkbox', item);
+
       if (item.value === value) {
         return item.text;
       }
@@ -43,7 +47,7 @@ export class StatService {
       const { componentFeId, value = [] } = a;
 
       const cmp = componentList.filter((c) => c.fe_id === componentFeId)[0];
-      const { type, props = {} } = cmp;
+      const { type, props = {} } = cmp || {};
       if (type === 'surveyRadio') {
         res[componentFeId] = value
           .map((v) => this._getRadioOptText(v, props))
@@ -97,13 +101,13 @@ export class StatService {
     // 获取问卷
     const q = await this.surveyService.findOne(surveyId);
     // 不存在该问卷
-    if (!q) return [];
+    if (q == null) return [];
 
     const { componentList = [] } = q;
 
     const comp = componentList.filter((c) => c.fe_id === componentFeId)[0];
     // 该问卷中不存在该组件
-    if (!comp) return [];
+    if (comp == null) return [];
 
     const { type, props } = comp;
 
@@ -111,7 +115,6 @@ export class StatService {
     if (type !== 'surveyRadio' && type !== 'surveyCheckbox') {
       return [];
     }
-
     // 获取答卷列表
     const total = await this.answerService.countAll(surveyId);
     // 没有对应答卷
@@ -127,11 +130,10 @@ export class StatService {
     answers.forEach((a) => {
       const { answerList = [] } = a;
       answerList.forEach((a) => {
-        if (a.componentFeId !== componentFeId) return;
-        a.value.forEach((v) => {
-          if (countInfo[v] == null) countInfo[v] = 0;
-          countInfo[v]++; // 累加
-        });
+        if (a.componentId !== componentFeId) return;
+        const v = a.value;
+        if (countInfo[v] == null) countInfo[v] = 0;
+        countInfo[v]++; // 累加
       });
     });
 
@@ -148,6 +150,8 @@ export class StatService {
       list.push({ name: text, count: countInfo[val] });
     }
 
-    return list;
+    return {
+      stat: list,
+    };
   }
 }

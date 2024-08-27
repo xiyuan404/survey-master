@@ -87,7 +87,6 @@ export class SurveyService {
   }
 
   async duplicate(id: string, author: string) {
-    console.log(author);
     const origin = (await this.surveyModel.findById(id)).toObject();
     const copy = new this.surveyModel({
       ...origin,

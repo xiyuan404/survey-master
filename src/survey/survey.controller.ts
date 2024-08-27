@@ -80,7 +80,6 @@ export class SurveyController {
   @Post('duplicate/:id')
   duplicate(@Param('id') id: string, @Request() req) {
     const { username } = req.user;
-    console.log(req.user);
     return this.surveyService.duplicate(id, username);
   }
 }

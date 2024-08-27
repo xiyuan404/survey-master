@@ -1,10 +1,11 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { StatService } from './stat.service';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('stat')
 export class StatController {
   constructor(private readonly statService: StatService) {}
-
+  @Public()
   @Get(':surveyId')
   async getSurveyStat(
     @Param('surveyId') surveyId: string,
@@ -16,7 +17,7 @@ export class StatController {
       pageSize,
     });
   }
-
+  @Public()
   @Get(':surveyId/:componentFeId')
   getComponentStat(
     @Param('surveyId') surveyId: string,

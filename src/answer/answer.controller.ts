@@ -9,7 +9,6 @@ export class AnswerController {
   @Public()
   @Post()
   async create(@Body() body) {
-    console.log('body', body);
     return await this.answerService.create(body);
   }
 }

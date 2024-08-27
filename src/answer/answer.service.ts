@@ -26,7 +26,7 @@ export class AnswerService {
     if (!surveyId) return [];
 
     const { page, pageSize } = opt;
-    this.answerModel
+    return this.answerModel
       .find({
         surveyId,
       })
