@@ -1,13 +1,16 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   Request,
 } from '@nestjs/common';
 import { SurveyService } from './survey.service';
+import { SurveyDto } from './dto/survey.dto';
 
 @Controller('surveys')
 export class SurveyController {
@@ -30,9 +33,25 @@ export class SurveyController {
     @Query('keyword') keyword: string,
     @Query('page') page: number,
     @Query('pageSize') pageSize: number,
+    @Query('isStar') isStar: boolean = false,
+    @Query('isDeleted') isDeleted: boolean = false,
+    @Request() request,
   ) {
-    const list = await this.surveyService.findAll(keyword, page, pageSize);
-    const count = await this.surveyService.countAll(keyword);
+    const { username } = request.user;
+    const list = await this.surveyService.findAll(
+      keyword,
+      page,
+      pageSize,
+      isStar,
+      isDeleted,
+      username,
+    );
+    const count = await this.surveyService.countAll(
+      keyword,
+      username,
+      isStar,
+      isDeleted,
+    );
 
     return {
       list,
@@ -41,12 +60,18 @@ export class SurveyController {
   }
 
   @Delete(':id')
-  deleteOne(@Param('id') id: string) {
-    return this.surveyService.deleteOne(id);
+  deleteOne(@Param('id') id: string, @Request() req) {
+    const { username } = req.user;
+    return this.surveyService.deleteOne(id, username);
   }
 
-  // @Get('error')
-  // mockError() {
-  //   throw new HttpException('获取数据失败', HttpStatus.BAD_REQUEST);
-  // }
+  @Patch(':id')
+  updateOne(
+    @Param('id') id: string,
+    @Request() req,
+    @Body() updateSurveyDto: SurveyDto,
+  ) {
+    const { username } = req.user;
+    return this.surveyService.updateOne(id, username, updateSurveyDto);
+  }
 }

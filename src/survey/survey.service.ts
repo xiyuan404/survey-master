@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Survey } from './schemas/survey.schema';
 import { Model } from 'mongoose';
+import { nanoid } from 'nanoid';
 
 @Injectable()
 export class SurveyService {
@@ -10,17 +11,36 @@ export class SurveyService {
 
   async create(username: string) {
     const survey = new this.surveyModel({
-      title: 'title-' + Date.now(),
-      desc: 'desc',
+      title: '问卷标题-' + Date.now(),
+      desc: '问卷描述',
       author: username,
+      componentList: [
+        {
+          fe_id: nanoid(),
+          type: 'surveyInfo',
+          title: '问卷信息',
+          props: { title: '组件标题', desc: '组件描述' },
+        },
+      ],
     });
     return await survey.save();
   }
   async findOne(id: string) {
     return await this.surveyModel.findById(id);
   }
-  async findAll(keyword = '', page = 1, pageSize = 10) {
-    const whereOpt: any = {};
+  async findAll(
+    keyword = '',
+    page = 1,
+    pageSize = 10,
+    isStar: boolean,
+    isDeleted: boolean,
+    author = '',
+  ) {
+    const whereOpt: any = {
+      author,
+      isStar,
+      isDeleted,
+    };
     if (keyword) {
       const reg = new RegExp(keyword, 'i');
       whereOpt.title = { $regex: reg }; // 模糊查找
@@ -33,19 +53,36 @@ export class SurveyService {
       .limit(pageSize);
   }
 
-  async countAll(keyword: string) {
-    const whereOpt: any = {};
+  async countAll(
+    keyword: string,
+    author = '',
+    isStar: boolean,
+    isDeleted: boolean,
+  ) {
+    const whereOpt: any = {
+      author,
+      isStar,
+      isDeleted,
+    };
     if (keyword) {
       const reg = new RegExp(keyword, 'i');
       whereOpt.title = { $regex: reg }; // 模糊查找
     }
-    return await this.surveyModel.countDocuments(whereOpt);
+    return this.surveyModel.countDocuments(whereOpt);
   }
 
-  async deleteOne(id: string) {
-    return await this.surveyModel.findByIdAndDelete(id);
+  async deleteOne(id: string, author: string) {
+    return this.surveyModel.findOneAndDelete({ _id: id, author });
   }
-  async updateOne(id: string, updateData) {
-    return await this.surveyModel.updateOne({ _id: id }, updateData);
+
+  async deleteMany(ids: string[], author: string) {
+    return this.surveyModel.deleteMany({
+      _id: { $in: ids },
+      author,
+    });
+  }
+
+  async updateOne(id: string, author: string, updateData) {
+    return this.surveyModel.updateOne({ _id: id, author }, updateData);
   }
 }
