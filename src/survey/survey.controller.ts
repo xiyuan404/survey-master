@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { SurveyService } from './survey.service';
 import { SurveyDto } from './dto/survey.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('surveys')
 export class SurveyController {
@@ -23,6 +24,7 @@ export class SurveyController {
     return this.surveyService.create(username);
   }
 
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.surveyService.findOne(id);

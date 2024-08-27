@@ -94,7 +94,7 @@ export class SurveyService {
       _id: new mongoose.Types.ObjectId(),
       author,
       isDeleted: false,
-      isPublish: false,
+      isPublished: false,
       isStar: false,
       title: origin.title + ' 副本',
       componentList: origin.componentList.map((item) => {

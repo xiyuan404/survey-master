@@ -19,7 +19,7 @@ export class Survey {
   css: string;
 
   @Prop({ default: false })
-  isPublish: string;
+  isPublished: boolean;
 
   @Prop({ default: false })
   isDeleted: boolean;
