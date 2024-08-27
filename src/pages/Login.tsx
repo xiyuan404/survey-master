@@ -9,6 +9,7 @@ import { useRequest } from 'ahooks'
 import { UserAPI } from 'src/service/user'
 import { setToken } from 'src/utils/userToken'
 import { useDispatch } from 'react-redux'
+import { loginReducer } from 'src/store/userReducer'
 
 const { Password } = Input
 const { Title } = Typography
@@ -35,7 +36,6 @@ function getUserInfoFromStorage() {
 
 const Login: FC = () => {
   const nav = useNavigate()
-  const dispatch = useDispatch()
   const [form] = Form.useForm()
 
   useEffect(() => {
@@ -51,8 +51,8 @@ const Login: FC = () => {
     {
       manual: true,
       onSuccess(result) {
-        const { token = '' } = result
-        setToken(token)
+        const { access_token = '' } = result
+        setToken(access_token)
 
         message.success('登录成功')
         nav(MANAGE_INDEX_PATHNAME)

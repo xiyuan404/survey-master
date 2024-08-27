@@ -61,13 +61,13 @@ const List: FC = () => {
     setPage(1)
     setList([])
     setTotal(0)
-    load()
+    console.log('keyword变化重置状态')
   }, [keyword])
 
   // 加载第一页，初始化
   useEffect(() => {
-    load()
-  }, [])
+    tryLoadMore()
+  }, [searchParams])
 
   useEffect(() => {
     if (hasMoreData) {

@@ -4,10 +4,13 @@ import { UserAPI } from 'src/service/user'
 import { useRequest } from 'ahooks'
 import { useDispatch } from 'react-redux'
 import { loginReducer } from 'src/store/userReducer'
+import { useLocation } from 'react-router-dom'
+import { isNoNeedUserInfo } from 'src/router'
 
 const useLoadUserData = () => {
   //返回加载状态
   const [waitingUserData, setWaitingUserData] = useState(true)
+  const { pathname } = useLocation()
 
   const dispatch = useDispatch()
 
@@ -37,7 +40,10 @@ const useLoadUserData = () => {
       setWaitingUserData(false)
       return
     }
-
+    if (isNoNeedUserInfo(pathname)) {
+      setWaitingUserData(false)
+      return
+    }
     run()
   }, [username])
 

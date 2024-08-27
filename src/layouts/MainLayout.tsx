@@ -1,4 +1,4 @@
-import { Layout } from 'antd'
+import { Layout, Spin } from 'antd'
 import React, { FC } from 'react'
 import { Outlet } from 'react-router-dom'
 import styles from './MainLayout.module.scss'
@@ -12,7 +12,7 @@ const { Header, Content, Footer } = Layout
 const MainLayout: FC = () => {
   const { waitingUserData } = useLoadUserData()
   // useRedirect(waitingUserData)
-
+  if (waitingUserData) return <Spin />
   return (
     <Layout className={styles.wrapper}>
       <Header className={styles.header}>

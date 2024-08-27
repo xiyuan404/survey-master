@@ -53,9 +53,8 @@ const SurveyCard: FC<SurveyCardPropsType> = (props: SurveyCardPropsType) => {
       manual: true,
       onSuccess(data) {
         // 复制成功,跳转到问卷编辑页
-        const { id } = data
         message.success('复制成功')
-        nav('/survey/edit/' + id)
+        nav(`/survey/edit/${data.id || data._id}`)
       },
     }
   )

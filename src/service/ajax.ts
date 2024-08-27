@@ -7,7 +7,7 @@ export type ResDataType = {
 }
 const instance = axios.create({
   timeout: 10 * 1000,
-  baseURL: '/api',
+  baseURL: 'http://localhost:3005',
 })
 
 instance.interceptors.request.use(

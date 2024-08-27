@@ -5,24 +5,23 @@ import { Button, Divider, message, Space } from 'antd'
 import { BarsOutlined, DeleteOutlined, PlusOutlined, StarOutlined } from '@ant-design/icons'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { surveysAPI } from 'src/service/survey'
-import { debug } from 'console'
+import { useRequest } from 'ahooks'
+import useLoadUserData from 'src/hooks/useLoadUserData'
 
 const ManageLayout: FC = () => {
+  // 加载用户信息
+  useLoadUserData()
+
   const { pathname } = useLocation()
   const nav = useNavigate()
 
-  const [loading, setLoading] = useState(false)
-
-  const createSurvey = async () => {
-    setLoading(true)
-    const result = await surveysAPI.create()
-
-    const { id } = result
-    if (id) {
-      nav('/survey/edit/' + id)
+  const { loading, run: createSurvey } = useRequest(surveysAPI.create, {
+    onSuccess(result) {
+      nav(`/survey/edit/${result.id || result._id}`)
       message.success('创建成功')
-    }
-  }
+    },
+    manual: true,
+  })
 
   return (
     <div className={styles.container}>

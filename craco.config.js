@@ -34,8 +34,8 @@ module.exports = {
   devServer: {
     port: 8001, // B 端，前端
     host: '0.0.0.0',
-    proxy: {
-      '/api': 'http://localhost:3001', // Mock
-    },
+    // proxy: {
+    //   '/api': 'http://localhost:3005', // Mock
+    // },
   },
 }
