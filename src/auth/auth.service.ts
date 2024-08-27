@@ -28,7 +28,7 @@ export class AuthService {
     }
     // 将 Mongoose 模型实例转换为普通的 JavaScript 对象
     const { password, ...payload } = userInfo.toObject(); // eslint-disable-line
-    console.log(payload);
+    // console.log(payload);
 
     return {
       access_token: await this.jwtService.signAsync(payload),

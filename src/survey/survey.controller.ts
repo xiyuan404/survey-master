@@ -74,4 +74,11 @@ export class SurveyController {
     const { username } = req.user;
     return this.surveyService.updateOne(id, username, updateSurveyDto);
   }
+
+  @Post('duplicate/:id')
+  duplicate(@Param('id') id: string, @Request() req) {
+    const { username } = req.user;
+    console.log(req.user);
+    return this.surveyService.duplicate(id, username);
+  }
 }

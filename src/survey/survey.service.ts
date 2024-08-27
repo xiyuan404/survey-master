@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Survey } from './schemas/survey.schema';
-import { Model } from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import { nanoid } from 'nanoid';
 
 @Injectable()
@@ -84,5 +84,26 @@ export class SurveyService {
 
   async updateOne(id: string, author: string, updateData) {
     return this.surveyModel.updateOne({ _id: id, author }, updateData);
+  }
+
+  async duplicate(id: string, author: string) {
+    console.log(author);
+    const origin = (await this.surveyModel.findById(id)).toObject();
+    const copy = new this.surveyModel({
+      ...origin,
+      _id: new mongoose.Types.ObjectId(),
+      author,
+      isDeleted: false,
+      isPublish: false,
+      isStar: false,
+      title: origin.title + ' 副本',
+      componentList: origin.componentList.map((item) => {
+        return {
+          ...item,
+          fe_id: nanoid(),
+        };
+      }),
+    });
+    return await copy.save();
   }
 }

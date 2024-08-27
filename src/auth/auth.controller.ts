@@ -13,7 +13,6 @@ export class AuthController {
 
   @Get('profile')
   getProfile(@Request() req) {
-    console.log(req.user);
     return req.user;
   }
 }
