@@ -7,6 +7,7 @@
 import { postAnswer } from '@/services/answer'
 import { NextApiRequest, NextApiResponse } from 'next'
 
+// flat vs nest data structure
 function getAnswerInfo(reqBody: any) {
   const answerList: any[] = []
   Object.keys(reqBody).forEach((key) => {

@@ -7,7 +7,7 @@ import styles from '@/styles/Survey.module.scss'
 type PropsType = {
   errno: number
   data?: {
-    id: string
+    _id: string
     title: string
     desc?: string
     js?: string
@@ -36,7 +36,7 @@ export default function Survey(props: PropsType) {
   }
 
   const {
-    id,
+    _id: id,
     isDeleted,
     isPublished,
     desc = '',
@@ -98,11 +98,9 @@ export async function getServerSideProps({
   params: { id: string }
 }) {
   const { id = '' } = params
-  console.log('params', params)
 
   // 根据id获取问卷信息
   const data = (await getSurveyInfoById(id)) || {}
-  console.log('data', data)
   return {
     props: data,
   }

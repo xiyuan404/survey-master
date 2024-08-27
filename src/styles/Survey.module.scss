@@ -1,12 +1,14 @@
 .componentWrapper {
   border-bottom: 1px solid #f1f1f1;
+  border-radius: 3px;
+  padding: 12px;
 }
-
 .submitBtnContainer {
   text-align: center;
   margin: 16px;
 
   button {
+    display: inline-block;
     color: #fff;
     background-color: #005a9c; // dodge \blue
     border: 1px solid transparent;
