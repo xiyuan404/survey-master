@@ -10,5 +10,6 @@ import { Survey, SurveySchema } from './schemas/survey.schema';
   ],
   controllers: [SurveyController],
   providers: [SurveyService],
+  exports: [SurveyService],
 })
 export class SurveyModule {}

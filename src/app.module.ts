@@ -7,6 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { AnswerModule } from './answer/answer.module';
+import { StatModule } from './stat/stat.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { AnswerModule } from './answer/answer.module';
     UsersModule,
     AuthModule,
     AnswerModule,
+    StatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
